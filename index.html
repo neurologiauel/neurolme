@@ -1782,8 +1782,14 @@ async function getPdf(name){
 let dl=null,dlTried=null;
 function dlReady(){if(!dlTried)dlTried=(window.claude&&window.claude.use)?window.claude.use('downloads').then(x=>dl=x).catch(()=>null):Promise.resolve(null);return dlTried}
 setTimeout(dlReady,0);
-async function saveFile(name,bytes){
+const inClaude=!!(window.claude&&window.claude.use);
+function preTab(){if(inClaude)return null;try{const w=window.open('','_blank');if(w){w.document.write('<!DOCTYPE html><title>Gerando PDF…</title><body style="font:16px system-ui;padding:40px;color:#16202b">Gerando o PDF, aguarde…</body>');w.document.close()}return w}catch(e){return null}}
+async function saveFile(name,bytes,win){
   const blob=new Blob([bytes],{type:'application/pdf'});
+  if(!inClaude){const url=URL.createObjectURL(blob);
+    if(win&&!win.closed){win.location.href=url;toast('PDF aberto em nova aba');return}
+    const w=window.open(url,'_blank');if(w){toast('PDF aberto em nova aba');return}
+    toast('Permita pop-ups deste site para abrir o PDF em nova aba');}
   await dlReady();
   if(dl){try{await dl.save({filename:name,data:blob});toast('Arquivo salvo');return}catch(e){if(e&&e.code==='declined'){toast('Download cancelado');return}}}
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Arquivo gerado');
@@ -1799,10 +1805,11 @@ async function gen(which){
   update(); const {A}=window._last; const data=docData(window._last.data); const bad=A.filter(a=>a[0]==='bad');
   $('genMsg').textContent=bad.length?`Atenção: gerado com ${bad.length} pendência(s) — veja a conferência.`:'';
   const btns=[...document.querySelectorAll('.side .btn')];btns.forEach(b=>b.disabled=true);
+  const win=preTab();
   try{
-    if(which==='pack'){const parts=[];for(const k of prot().outputs($('tipo').value,prot().read()))parts.push(await build(k,data));await saveFile(`${baseName()}_pacote.pdf`,await window.LMEFill.mergePdfs(window.PDFLib,parts))}
-    else await saveFile(`${baseName()}_${which.toUpperCase()}.pdf`,await build(which,data));
-  }catch(e){console.error(e);$('genMsg').textContent='Erro ao gerar: '+e.message}
+    if(which==='pack'){const parts=[];for(const k of prot().outputs($('tipo').value,prot().read()))parts.push(await build(k,data));await saveFile(`${baseName()}_pacote.pdf`,await window.LMEFill.mergePdfs(window.PDFLib,parts),win)}
+    else await saveFile(`${baseName()}_${which.toUpperCase()}.pdf`,await build(which,data),win);
+  }catch(e){console.error(e);if(win&&!win.closed)win.close();$('genMsg').textContent='Erro ao gerar: '+e.message}
   finally{btns.forEach(b=>b.disabled=false)}
 }
 $('bPack').onclick=()=>gen('pack');
