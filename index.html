@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LME Fácil — Neurologia HU Londrina</title>
+<style>
+:root{
+  --bg:#f4f6f8;--card:#fff;--ink:#16202b;--muted:#5d6b79;--line:#dde3e9;
+  --brand:#0b5d73;--brand-2:#e6f2f5;--ok:#1f7a4d;--ok-bg:#e7f5ee;--warn:#9a6200;--warn-bg:#fff4dc;
+  --bad:#b42318;--bad-bg:#fdecea;--radius:10px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--brand);color:#fff;padding:14px 20px}
+header h1{margin:0;font-size:18px;font-weight:650;letter-spacing:.2px}
+header p{margin:2px 0 0;opacity:.85;font-size:12.5px}
+.wrap{max-width:1240px;margin:0 auto;padding:16px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+@media (max-width:980px){.wrap{grid-template-columns:1fr}.side{position:static!important}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px}
+.card h2{margin:0 0 4px;font-size:15px;display:flex;align-items:center;gap:8px}
+.card h2 .n{background:var(--brand);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-grid;place-items:center;font-size:12px}
+.card .sub{color:var(--muted);font-size:12.5px;margin:0 0 12px}
+.grid{display:grid;gap:10px 12px;grid-template-columns:repeat(12,1fr)}
+.c12{grid-column:span 12}.c8{grid-column:span 8}.c6{grid-column:span 6}.c4{grid-column:span 4}.c3{grid-column:span 3}.c2{grid-column:span 2}.c5{grid-column:span 5}.c7{grid-column:span 7}
+@media (max-width:640px){.c8,.c7,.c6,.c5,.c4,.c3,.c2{grid-column:span 12}}
+label{display:block;font-size:12px;color:var(--muted);margin-bottom:3px;font-weight:550}
+label .req{color:var(--bad)}
+input[type=text],input[type=date],input[type=number],input[type=email],input[type=tel],select,textarea{
+  width:100%;padding:7px 9px;border:1px solid #c9d2db;border-radius:7px;font:inherit;background:#fff;color:var(--ink)}
+textarea{min-height:92px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid #9cd0dc;border-color:var(--brand)}
+.opts{display:flex;flex-wrap:wrap;gap:6px 14px}
+.opts label{display:flex;align-items:center;gap:6px;color:var(--ink);font-weight:450;font-size:13.5px;margin:0;cursor:pointer}
+.radio-cards{display:grid;gap:8px}
+.radio-cards label{border:1px solid var(--line);border-radius:8px;padding:9px 11px;display:flex;gap:9px;align-items:flex-start;color:var(--ink);font-weight:450;font-size:13.5px;cursor:pointer;margin:0}
+.radio-cards label:has(input:checked){border-color:var(--brand);background:var(--brand-2)}
+.radio-cards input{margin-top:3px}
+table.docs{width:100%;border-collapse:collapse;font-size:13px}
+table.docs th{text-align:left;font-size:11.5px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line);padding:6px 6px}
+table.docs td{border-bottom:1px solid #eef1f4;padding:7px 6px;vertical-align:middle}
+table.docs td input[type=date]{width:150px;padding:5px 7px}
+.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}.pill.warn{background:var(--warn-bg);color:var(--warn)}.pill.bad{background:var(--bad-bg);color:var(--bad)}.pill.gen{background:var(--brand-2);color:var(--brand)}
+.side{position:sticky;top:12px}
+.alerts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.alerts li{padding:8px 10px;border-radius:7px;font-size:13px}
+.alerts li.bad{background:var(--bad-bg);color:#7a1a12}.alerts li.warn{background:var(--warn-bg);color:#6b4600}.alerts li.ok{background:var(--ok-bg);color:#14553a}.alerts li.info{background:#eef3f7;color:#30404f}
+.score{display:flex;gap:10px;margin:6px 0 12px}
+.score div{flex:1;border-radius:8px;padding:8px;text-align:center;background:#f2f5f7}
+.score b{display:block;font-size:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--brand);background:var(--brand);color:#fff;border-radius:8px;padding:9px 12px;font:inherit;font-weight:600;cursor:pointer;width:100%;margin-top:7px}
+.btn.sec{background:#fff;color:var(--brand)}
+.btn:disabled{opacity:.55;cursor:wait}
+.small{font-size:12px;color:var(--muted)}
+pre.rx{white-space:pre-wrap;background:#f7f9fa;border:1px solid var(--line);border-radius:8px;padding:12px;font:12.5px/1.5 ui-monospace,Consolas,monospace;margin:0}
+.lab{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media (max-width:640px){.lab{grid-template-columns:repeat(2,1fr)}}
+.muted-box{background:#f7f9fa;border:1px dashed #c9d2db;border-radius:8px;padding:10px 12px;font-size:12.5px;color:var(--muted)}
+.hide{display:none!important}
+details summary{cursor:pointer;color:var(--brand);font-weight:600;font-size:13px}
+.pair{display:flex;gap:4px}
+.sameDate{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#f2f7f9;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:10px}
+.sameDate input{width:160px!important}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#16202b;color:#fff;padding:9px 14px;border-radius:8px;font-size:13px;opacity:0;transition:.2s;pointer-events:none}
+.toast.show{opacity:1}
+footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>LME Fácil — Medicamentos do CEAF (Farmácia do Paraná)</h1>
+  <p>Ambulatório de Neurologia · Hospital Universitário de Londrina · Os dados do paciente ficam só neste navegador e somem ao fechar a página.</p>
+</header>
+
+<div class="wrap">
+<main>
+
+  <section class="card">
+    <h2><span class="n">1</span>Protocolo e tipo de solicitação</h2>
+    <p class="sub" id="protoInfo"></p>
+    <div class="grid">
+      <div class="c6"><label>Protocolo / medicamento <span class="req">*</span></label><select id="prot"></select></div>
+      <div class="c6"><label>CID-10 <span class="req">*</span></label><select id="cid"></select></div>
+      <div class="c6"><label>Data da solicitação <span class="req">*</span></label><input type="date" id="dataSol">
+        <label class="opts" style="margin-top:5px"><input type="checkbox" id="semData"> Deixar a data em branco nos documentos (preencher à mão)</label></div>
+      <div class="c6"><label>Tipo de solicitação <span class="req">*</span></label>
+        <select id="tipo"><option value="inicial">Solicitação inicial</option><option value="adequacao">Adequação</option><option value="renovacao">Renovação</option></select></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>Documentos e exames exigidos pelo Estado</h2>
+    <p class="sub">Só o que depende da consulta: documentos pessoais (RG, CPF, CNS, comprovante de residência) são conferidos no pós-consulta. Itens <span class="pill gen">gerado aqui</span> saem prontos no fim.</p>
+    <div class="sameDate" id="sameDateBox">
+      <label style="margin:0">Exames coletados juntos?</label>
+      <input type="date" id="sameDate">
+      <button class="btn sec" id="sameDateBtn" style="width:auto;margin:0">Usar esta data em todos os exames laboratoriais</button>
+    </div>
+    <table class="docs"><thead><tr><th>Item</th><th>Validade</th><th>Data</th><th>Situação</th></tr></thead><tbody id="docsBody"></tbody></table>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>Medicamento(s) e critérios do PCDT</h2>
+    <div id="protMeds"></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>Dados clínicos</h2>
+    <div id="protClin"></div>
+    <div class="grid" style="margin-top:10px">
+      <div class="c12"><label>Tratamentos prévios / atuais para a doença (medicamento e tempo; justificar mudança)</label>
+        <textarea id="tratPrev" style="min-height:56px" placeholder="Deixe em branco se não houver tratamento prévio."></textarea></div>
+      <div class="c12"><label>Anamnese da LME (gerada automaticamente — pode editar) <span class="req">*</span></label>
+        <textarea id="anamnese" style="min-height:110px"></textarea>
+        <div class="small" id="anamCount"></div>
+        <label class="opts" style="margin-top:4px"><input type="checkbox" id="anamAuto" checked> Atualizar automaticamente com os dados acima</label></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">5</span>Dados do paciente</h2>
+    <p class="sub">Campos com <span style="color:var(--bad)">*</span> são obrigatórios na LME.</p>
+    <div class="grid">
+      <div class="c8"><label>Nome completo <span class="req">*</span></label><input type="text" id="pNome" autocomplete="off"></div>
+      <div class="c2"><label>Peso (kg) <span class="req">*</span></label><input type="number" id="pPeso" min="1" max="400"></div>
+      <div class="c2"><label>Altura (cm) <span class="req">*</span></label><input type="number" id="pAlt" min="30" max="250"></div>
+      <div class="c8"><label>Nome da mãe <span class="req">*</span></label><input type="text" id="pMae" autocomplete="off"></div>
+      <div class="c4"><label>Data de nascimento</label><input type="date" id="pNasc"></div>
+      <div class="c4"><label>Sexo</label><select id="pSexo"><option value="">—</option><option value="F">Feminino</option><option value="M">Masculino</option></select></div>
+      <div class="c4"><label>CNS do paciente</label><input type="text" id="pCns" inputmode="numeric" autocomplete="off"></div>
+      <div class="c4"><label>CPF do paciente</label><input type="text" id="pCpf" inputmode="numeric" autocomplete="off"></div>
+      <div class="c4"><label>Telefone 1</label><input type="tel" id="pTel1" autocomplete="off"></div>
+      <div class="c4"><label>Telefone 2</label><input type="tel" id="pTel2" autocomplete="off"></div>
+      <div class="c4"><label>E-mail</label><input type="email" id="pEmail" autocomplete="off"></div>
+      <div class="c12"><label>Raça/cor (informada pelo paciente) <span class="req">*</span></label>
+        <div class="opts">
+          <label><input type="radio" name="raca" value="branca"> Branca</label>
+          <label><input type="radio" name="raca" value="preta"> Preta</label>
+          <label><input type="radio" name="raca" value="parda"> Parda</label>
+          <label><input type="radio" name="raca" value="amarela"> Amarela</label>
+          <label><input type="radio" name="raca" value="indigena"> Indígena</label>
+          <input type="text" id="pEtnia" placeholder="Etnia" class="hide" style="max-width:220px">
+        </div></div>
+      <div class="c12"><label>Atestado de capacidade — o paciente é considerado incapaz? <span class="req">*</span></label>
+        <div class="opts"><label><input type="radio" name="incapaz" value="nao" checked> Não</label><label><input type="radio" name="incapaz" value="sim"> Sim</label></div></div>
+      <div class="c6 hide" id="respBox1"><label>Nome do responsável</label><input type="text" id="pResp" autocomplete="off"></div>
+      <div class="c6 hide" id="respBox2"><label>Documento do responsável (para o TER)</label><input type="text" id="pRespDoc" autocomplete="off"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">6</span>Médico solicitante e preenchimento</h2>
+    <div class="grid">
+      <div class="c12" id="medSelBox"><label>Médico solicitante (preceptor)</label><select id="medSel"></select><div class="small">Ao escolher o nome, CRM e CNS são preenchidos automaticamente.</div></div>
+      <div class="c6"><label>Nome do médico solicitante <span class="req">*</span></label><input type="text" id="mNome"></div>
+      <div class="c3"><label>CRM <span class="req">*</span></label><input type="text" id="mCrm"></div>
+      <div class="c3"><label>UF</label><input type="text" id="mUf" value="PR" maxlength="2"></div>
+      <div class="c6"><label>CNS do médico <span class="req">*</span></label><input type="text" id="mCns" inputmode="numeric"></div>
+      <div class="c6"><label>Campos 18–23 preenchidos por <span class="req">*</span></label>
+        <select id="preenchido"><option value="3">Médico solicitante</option><option value="0">Paciente</option><option value="1">Mãe do paciente</option><option value="2">Responsável (item 13)</option><option value="4">Outro</option></select></div>
+      <div class="c6 hide" id="outroBox1"><label>Nome (outro)</label><input type="text" id="oNome"></div>
+      <div class="c6 hide" id="outroBox2"><label>CPF (outro)</label><input type="text" id="oCpf"></div>
+      <div class="c12"><label class="opts"><input type="checkbox" id="lembrarMed"> Lembrar este médico neste computador (não guarda dados de paciente)</label></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">7</span>Receita para colar no sistema do hospital</h2>
+    <p class="sub">Quantidades iguais às da LME. Confira antes de assinar.</p>
+    <pre class="rx" id="rx"></pre>
+    <button class="btn sec" id="copyRx" style="width:auto">Copiar receita</button>
+  </section>
+
+</main>
+
+<aside class="side">
+  <section class="card">
+    <h2>Conferência</h2>
+    <div class="score"><div><b id="sOk">0</b><span class="small">ok</span></div><div><b id="sWarn">0</b><span class="small">atenção</span></div><div><b id="sBad">0</b><span class="small">pendências</span></div></div>
+    <ul class="alerts" id="alerts"></ul>
+  </section>
+  <section class="card">
+    <h2>Gerar documentos</h2>
+    <p class="sub">PDFs oficiais (LME do MS e formulários da SESA-PR) preenchidos. Assinaturas e carimbos continuam à mão.</p>
+    <button class="btn" id="bPack">Baixar pacote completo</button>
+    <div id="singleBtns"></div>
+    <button class="btn sec" id="bCheck">Copiar checklist para a pasta do paciente</button>
+    <button class="btn sec" id="bClear" style="border-color:#c9d2db;color:#5d6b79">Limpar dados do paciente</button>
+    <p class="small" id="genMsg"></p>
+  </section>
+  <section class="card">
+    <details><summary>Orientações do PCDT</summary><ul id="infos" class="small" style="padding-left:18px;margin:8px 0 0"></ul></details>
+  </section>
+</aside>
+</div>
+<footer>
+  Fontes: Consulta de Medicamentos da Farmácia do Paraná (SESA-PR), consultada em <span id="consultado"></span>; <span id="protRef"></span>; modelos oficiais de LME (MS) e formulários da SESA-PR; Nota Técnica nº 01/2026 CEMEPAR (Resolução SESA nº 910/2026) para medicamentos da Lista C1.
+  A ferramenta apoia o preenchimento — a conferência final e a assinatura são do médico prescritor.
+</footer>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script>/* Preenchimento dos PDFs oficiais (LME, Relatório Específico EM, TER EM) com pdf-lib.
+   Usado no navegador (window.PDFLib) e no Node (testes). */
+(function (root) {
+  function fmtDate(iso) {
+    if (!iso) return '';
+    const [y, m, d] = iso.split('-');
+    return `${d}/${m}/${y}`;
+  }
+  function safe(s) {
+    // Helvetica padrão (WinAnsi) não tem alguns caracteres; troca os mais comuns
+    return String(s || '')
+      .replace(/[‘’]/g, "'").replace(/[“”]/g, '"')
+      .replace(/[–—]/g, '-').replace(/≥/g, '>=').replace(/≤/g, '<=')
+      .replace(/³/g, '3').replace(/[^\x09\x0A\x0D\x20-\x7E -ÿ]/g, '');
+  }
+
+  // ---------- LME ----------
+  async function fillLME(PDFLib, bytes, d) {
+    const { PDFDocument, StandardFonts } = PDFLib;
+    const doc = await PDFDocument.load(bytes);
+    const form = doc.getForm();
+    const helv = await doc.embedFont(StandardFonts.Helvetica);
+    const T = (name, val, size) => {
+      try {
+        const f = form.getTextField(name);
+        const v = safe(val);
+        const max = f.getMaxLength();
+        f.setText(max ? v.slice(0, max) : v);
+        if (size) f.setFontSize(size);
+      } catch (e) { console.warn('campo', name, e.message); }
+    };
+    // Os rádios deste formulário têm /Opt = (Yes)(Yes)... e estados de aparência /0,/1,/2...
+    // por isso marcamos direto pelo estado do widget de índice idx.
+    const { PDFName } = PDFLib;
+    const R = (name, idx) => {
+      if (idx === null || idx === undefined) return;
+      try {
+        const g = form.getRadioGroup(name);
+        const widgets = g.acroField.getWidgets();
+        widgets.forEach((wd, i) => {
+          const on = wd.getOnValue(); // ex.: /0, /1
+          wd.setAppearanceState(i === idx && on ? on : PDFName.of('Off'));
+          if (i === idx && on) g.acroField.dict.set(PDFName.of('V'), on);
+        });
+      } catch (e) { console.warn('radio', name, e.message); }
+    };
+
+    T('CNES', d.cnes);
+    T('Nome do estabelecimento de saúde', d.estabelecimento, 10);
+    T('Nome do paciente', d.paciente.nome, 10);
+    T('Peso', d.paciente.peso);
+    T('Nome da mãe do paciente', d.paciente.mae, 10);
+    T('Altura', d.paciente.altura);
+
+    // Medicamentos (até 6 linhas)
+    const qtyFields = [
+      ['Text6', 'Text7', 'Text8', 'Text6a', 'Text7a', 'Text8a'],
+      ['Text10', 'Text11', 'Text12', 'Text10a', 'Text11a', 'Text12a'],
+      ['Text14', 'Text15', 'Text16', 'Text14a', 'Text15a', 'Text16a'],
+      ['Text18', 'Text19', 'Text20', 'Text6b', 'Text7b', 'Text8b'],
+      ['Text22', 'Text23', 'Text24', 'Text10b', 'Text11b', 'Text12b'],
+      ['Text22a', 'Text23a', 'Text24a', 'Text14b', 'Text15b', 'Text16b'],
+    ];
+    (d.medicamentos || []).slice(0, 6).forEach((m, i) => {
+      try {
+        const dd = form.getDropdown('Selecao med ' + (i + 1));
+        dd.select(m.lmeOption);
+        dd.setFontSize(8);
+      } catch (e) { console.warn('dropdown', e.message); }
+      qtyFields[i].forEach((fn, k) => T(fn, m.qtd[k] != null ? String(m.qtd[k]) : ''));
+    });
+
+    T('CID', d.cid);
+    T('Diagnóstico', d.diagnostico, 10);
+    T('Anamnese', d.anamnese, d.anamnese.length > 650 ? 6.5 : d.anamnese.length > 420 ? 7.5 : 8.5);
+    try { form.getTextField('Anamnese').enableMultiline(); } catch (e) {}
+
+    if (d.tratPrevio) { R('Tratamentos prévios?', 1); T('Tratamento', d.tratPrevioTexto, 8); }
+    else R('Tratamentos prévios?', 0);
+
+    if (d.incapaz) { R('Incapaz?', 1); T('Nome do Responsável', d.responsavel, 10); }
+    else R('Incapaz?', 0);
+
+    T('Médico Solicitante', d.medico.nome, 10);
+    T('TextCNS', d.medico.cns);
+    T('Today', fmtDate(d.dataSolicitacao));
+
+    // 18 - preenchido por: 0 paciente,1 mãe,2 responsável,3 médico,4 outro
+    R('dados complementares', d.preenchidoPor);
+    if (d.preenchidoPor === 4) { T('Nome', d.outroNome, 9); T('CPF', d.outroCpf); }
+
+    // 19 - raça/cor: 0 branca,1 amarela,2 preta,3 indígena,4 parda
+    const racaIdx = { branca: 0, amarela: 1, preta: 2, indigena: 3, parda: 4 }[d.paciente.raca];
+    R('Radio Button1', racaIdx);
+    if (d.paciente.raca === 'indigena') T('Etnia', d.paciente.etnia, 9);
+
+    T('Telefone I', d.paciente.tel1);
+    T('Telefone II', d.paciente.tel2);
+    if (d.paciente.cpf) { R('Documentos', 0); T('Documento', d.paciente.cpf, 10); }
+    else if (d.paciente.cns) { R('Documentos', 1); T('Documento', d.paciente.cns, 10); }
+    T('email', d.paciente.email, 9);
+
+    form.updateFieldAppearances(helv);
+    return await doc.save({ updateFieldAppearances: false, useObjectStreams: false });
+  }
+
+  // ---------- helpers de sobreposição ----------
+  function mkWriter(page, font, H) {
+    // coordenadas no padrão "top" (como no pdfplumber): y = topo da linha
+    return {
+      text(x, top, s, size = 9, bottomOfLine = 8) {
+        const t = safe(s); if (!t) return;
+        page.drawText(t, { x, y: H - top - bottomOfLine + 1.2, size, font });
+      },
+      fit(x, top, s, maxW, size = 9) {
+        let t = safe(s); if (!t) return; let sz = size;
+        while (font.widthOfTextAtSize(t, sz) > maxW && sz > 5.5) sz -= 0.25;
+        page.drawText(t, { x, y: H - top - 7, size: sz, font });
+      },
+      x(xParen, top) { // marca "X" dentro de "( )"
+        page.drawText('X', { x: xParen + 3.2, y: H - top - 7, size: 8.5, font });
+      },
+      wrap(x, top, s, maxW, lineH, maxLines, size = 8) {
+        const words = safe(s).split(/\s+/); const lines = []; let cur = '';
+        for (const w of words) {
+          const tryS = cur ? cur + ' ' + w : w;
+          if (font.widthOfTextAtSize(tryS, size) > maxW && cur) { lines.push(cur); cur = w; } else cur = tryS;
+        }
+        if (cur) lines.push(cur);
+        lines.slice(0, maxLines).forEach((l, i) => page.drawText(l, { x, y: H - top - 7 - i * lineH, size, font }));
+        return lines.length;
+      },
+    };
+  }
+
+  // ---------- Relatório Médico Específico EM (SESA-PR, 01/2025) ----------
+  async function fillRelEM(PDFLib, bytes, d) {
+    const { PDFDocument, StandardFonts } = PDFLib;
+    const doc = await PDFDocument.load(bytes);
+    const font = await doc.embedFont(StandardFonts.Helvetica);
+    const page = doc.getPages()[0];
+    const H = page.getHeight();
+    const w = mkWriter(page, font, H);
+    const r = d.rel;
+
+    w.x(111.4, 91.6); // CID G35
+    w.fit(108, 120.6, d.paciente.nome, 420, 9);
+    w.fit(102, 135.5, d.paciente.cns, 195, 9);
+    if (d.paciente.nasc) {
+      const [y, m, dd] = d.paciente.nasc.split('-');
+      w.text(398, 135.5, dd, 9); w.text(441, 135.5, m, 9); w.text(492, 135.5, y, 9);
+    }
+    if (d.paciente.sexo === 'F') w.x(106.1, 151.1);
+    if (d.paciente.sexo === 'M') w.x(160.3, 151.1);
+    if (d.paciente.idade != null && d.paciente.idade !== '') w.text(360, 150.3, String(d.paciente.idade), 9);
+
+    const forma = { 'EM-RR': [81.8, 181.1], 'EM-PP': [308.4, 181.1], 'EM-SP': [81.8, 190.9], 'CIS': [308.4, 189.7] }[r.forma];
+    if (forma) w.x(forma[0], forma[1]);
+
+    // Medicamento solicitado (posição do "( )" no relatório) e itens específicos
+    if (r.m && r.m.rel) w.x(r.m.rel[0], r.m.rel[1]);
+    if (r.med === 'fum') w.x(r.fumIni === 'sim' ? 459.1 : 496.5, 376.7);
+    if (r.m && r.m.tb) {
+      const ppd = { nr: 377.0, ate5: 431.2, mais5: 502.7 }[r.ppd]; if (ppd) w.x(ppd, 591.2);
+      if (r.tbl) w.x(r.tbl === 'sim' ? 431.7 : 467.0, 605.2);
+      if (r.rx) w.x(r.rx === 'normal' ? 308.4 : 364.3, 618.8);
+    }
+
+    // Medicamentos já utilizados (3 linhas)
+    const txt = r.medicamentosPrevios || 'Nenhum (virgem de tratamento).';
+    const words = safe(txt).split(/\s+/); const lines = []; let cur = '';
+    const widths = [380, 445, 445, 445];
+    for (const wd of words) {
+      const t = cur ? cur + ' ' + wd : wd;
+      if (font.widthOfTextAtSize(t, 7.5) > widths[Math.min(lines.length, 3)] && cur) { lines.push(cur); cur = wd; } else cur = t;
+    }
+    if (cur) lines.push(cur);
+    const lineTops = [[148, 325.4], [83, 338.3], [83, 352.5]];
+    lines.slice(0, 3).forEach((l, i) => page.drawText(l, { x: lineTops[i][0], y: H - lineTops[i][1] - 6.5, size: 7.5, font }));
+
+    // RM
+    if (r.rmData) { const [y, m, dd] = r.rmData.split('-'); w.text(259, 426.8, `${dd}`, 8.5); w.text(290, 426.8, m, 8.5); w.text(326, 426.8, y, 8.5); }
+    w.fit(376, 426.8, r.rmLesoes, 100, 8.5);
+    w.fit(376, 454.1, r.surtos, 150, 8.5);
+    if (r.edssData) { const [y, m, dd] = r.edssData.split('-'); w.text(247, 480.3, dd, 8.5); w.text(290, 480.3, m, 8.5); w.text(326, 480.3, y, 8.5); }
+    w.fit(376, 480.3, r.edss, 100, 8.5);
+
+    if (r.linha === 'alta') {
+      if (r.criterioAlta === 'virgem') w.x(81.8, 510.6);
+      if (r.criterioAlta === 'falha') w.x(81.8, 536.5);
+    }
+    if (r.declaraCI) w.x(81.8, 660.1);
+
+    w.fit(172, 700.4, d.medico.nome, 245, 8.5);
+    w.fit(442, 700.4, d.medico.crm, 52, 8.5);
+    w.text(513, 700.4, d.medico.uf || 'PR', 8.5);
+    if (d.dataSolicitacao) { const [y, m, dd] = d.dataSolicitacao.split('-'); w.text(437, 727.5, dd, 8.5); w.text(466, 727.5, m, 8.5); w.text(500, 727.5, y, 8.5); }
+
+    return await doc.save({ useObjectStreams: false });
+  }
+
+  // ---------- TER Esclerose Múltipla (SESA-PR, 01/2025) ----------
+  async function fillTerEM(PDFLib, bytes, d) {
+    const { PDFDocument, StandardFonts } = PDFLib;
+    const doc = await PDFDocument.load(bytes);
+    const font = await doc.embedFont(StandardFonts.Helvetica);
+    const [p1, p2] = doc.getPages();
+    const H = p1.getHeight();
+    const w1 = mkWriter(p1, font, H), w2 = mkWriter(p2, font, H);
+
+    w1.fit(92, 112.6, d.paciente.nome, 330, 9.5);
+    w2.text(73, 485, d.local || 'Londrina - PR', 9.5);
+    w2.text(388, 485, fmtDate(d.dataSolicitacao), 9.5);
+    w2.fit(127, 504.6, d.paciente.nome, 420, 9.5);
+    w2.fit(156, 524, d.paciente.cns, 250, 9.5);
+    if (d.incapaz) {
+      w2.fit(161, 543.6, d.responsavel, 390, 9.5);
+      w2.fit(249, 563, d.responsavelDoc, 300, 9.5);
+    }
+    w2.fit(133, 633.7, d.medico.nome, 225, 9.5);
+    w2.fit(389, 633.7, d.medico.crm, 88, 9.5);
+    w2.text(498, 633.7, d.medico.uf || 'PR', 9.5);
+    w2.text(264, 690.5, fmtDate(d.dataSolicitacao), 9);
+    return await doc.save({ useObjectStreams: false });
+  }
+
+
+  // ---------- Doença de Alzheimer (SESA-PR, 06/2026) ----------
+  const DA_CID_X = { 'G30.0': [77.8, 90.7], 'G30.1': [123.3, 136.2], 'G30.8': [168.6, 181.5], 'F00.0': [216.5, 229.4], 'F00.1': [260.6, 273.5], 'F00.2': [304.4, 317.4] };
+  function xmid(page, font, H, x0, x1, top) {
+    page.drawText('X', { x: (x0 + x1) / 2 + 1.6 - font.widthOfTextAtSize('X', 8.5) / 2, y: H - top - 7.4, size: 8.5, font });
+  }
+  function dateParts(w, iso, top, xs, size = 8.5) {
+    if (!iso) return; const [y, m, dd] = iso.split('-');
+    w.text(xs[0], top, dd, size); w.text(xs[1], top, m, size); w.text(xs[2], top, y, size);
+  }
+  async function fillRelDA(PDFLib, bytes, d) {
+    const { PDFDocument, StandardFonts } = PDFLib;
+    const doc = await PDFDocument.load(bytes);
+    const font = await doc.embedFont(StandardFonts.Helvetica);
+    const page = doc.getPages()[0]; const H = page.getHeight();
+    const w = mkWriter(page, font, H); const X = (a, b, t) => xmid(page, font, H, a, b, t);
+    const p = d.prot;
+    const c = DA_CID_X[d.cid]; if (c) X(c[0], c[1], 54.0);
+    const meds = p.medsSel || [];
+    if (meds.includes('donepezila')) X(56.7, 72.2, 86.7);
+    if (meds.includes('galantamina')) X(132.7, 148.2, 86.7);
+    if (meds.includes('rivastigmina')) X(212.0, 224.9, 86.7);
+    if (meds.includes('memantina')) X(294.5, 307.4, 86.7);
+    w.fit(89, 118.3, d.paciente.nome, 390, 9);
+    w.fit(80, 134.6, d.paciente.cns, 185, 9);
+    dateParts(w, d.paciente.nasc, 134.6, [410, 450, 490]);
+    if (p.escol === 'le4') X(59.3, 72.2, 168.5);
+    if (p.escol === 'gt4') X(206.7, 219.7, 168.5);
+    if (p.niaaa) X(56.7, 69.8, 217.5);
+    w.text(86, 249.1, p.cdr, 9);
+    dateParts(w, p.cdrData, 249.1, [159, 199, 240]);
+    w.text(89, 281.8, p.meem, 9);
+    dateParts(w, p.meemData, 281.8, [161, 201, 242]);
+    const crit = { leve_iache: [56.7, 69.8, 330.6], mod_mem_iache: [56.7, 72.9, 394.4], mod_iache: [59.3, 75.3, 437.2], grave_mono: [56.7, 72.9, 501.0], grave_mem_don: [56.7, 70.3, 543.7] }[p.criterio];
+    if (crit) X(crit[0], crit[1], crit[2]);
+    if (p.declaraExcl) X(56.7, 67.2, 723.3);
+    w.fit(158, 738.2, d.medico.nome, 280, 9);
+    w.text(85, 748.1, d.medico.crm, 9);
+    w.text(189, 748.1, d.medico.uf || 'PR', 9);
+    dateParts(w, d.dataSolicitacao, 771.6, [403, 432, 461]);
+    return await doc.save({ useObjectStreams: false });
+  }
+  async function fillTerDA(PDFLib, bytes, d) {
+    const { PDFDocument, StandardFonts } = PDFLib;
+    const doc = await PDFDocument.load(bytes);
+    const font = await doc.embedFont(StandardFonts.Helvetica);
+    const page = doc.getPages()[0]; const H = page.getHeight();
+    const w = mkWriter(page, font, H);
+    w.fit(92, 60.5, d.paciente.nome, 430, 9.5);
+    w.fit(40, 130, d.medico.nome, 480, 9.5);
+    w.text(86, 537.6, d.local || 'Londrina - PR', 9);
+    w.text(390, 537.6, fmtDate(d.dataSolicitacao), 9);
+    w.fit(140, 551.5, d.paciente.nome, 410, 9);
+    w.fit(172, 565.6, d.paciente.cns, 300, 9);
+    if (d.incapaz) { w.fit(178, 579.5, d.responsavel, 370, 9); w.fit(270, 593.4, d.responsavelDoc, 275, 9); }
+    w.fit(152, 648.2, d.medico.nome, 205, 9);
+    w.text(410, 648.2, d.medico.crm, 9);
+    w.text(493, 648.2, d.medico.uf || 'PR', 9);
+    w.text(262, 686.4, fmtDate(d.dataSolicitacao), 9);
+    return await doc.save({ useObjectStreams: false });
+  }
+  async function fillRelDDP(PDFLib, bytes, d) {
+    const { PDFDocument, StandardFonts } = PDFLib;
+    const doc = await PDFDocument.load(bytes);
+    const font = await doc.embedFont(StandardFonts.Helvetica);
+    const page = doc.getPages()[0]; const H = page.getHeight();
+    const w = mkWriter(page, font, H); const p = d.prot;
+    w.fit(92, 155.3, d.paciente.nome, 430, 9.5);
+    w.fit(82, 186.7, d.paciente.cns, 200, 9.5);
+    if (d.paciente.nasc) { const [y, m, dd] = d.paciente.nasc.split('-'); w.text(414, 186.7, dd, 9.5); w.text(457, 186.7, m, 9.5); w.text(497, 186.7, y, 9.5); }
+    if (p.mds) w.x(56.6, p.mdsTipo === 'provavel' ? 261.5 : 242.6);
+    if (p.dem1) w.x(56.6, 317.2);
+    if (p.meemAnormal) w.x(56.6, 345.7);
+    w.text(256, 364.8, p.meem, 9.5);
+    w.text(212, 383.7, p.anosEstudo, 9.5);
+    if (p.avd) w.x(56.6, 519.2);
+    if (p.semDep) { w.x(56.6, 544.5); w.x(56.6, 569.5); }
+    if (p.declaraCI) w.x(56.6, 594.5);
+    w.fit(186, 638.5, d.medico.nome, 340, 9.5);
+    w.text(92, 651.1, d.medico.crm, 9.5);
+    w.text(170, 651.1, d.medico.uf || 'PR', 9.5);
+    if (d.dataSolicitacao) { const [y, m, dd] = d.dataSolicitacao.split('-'); w.text(437, 678.3, dd, 9); w.text(473, 678.3, m, 9); w.text(503, 678.3, y, 9); }
+    return await doc.save({ useObjectStreams: false });
+  }
+  async function fillTerDP(PDFLib, bytes, d) {
+    const { PDFDocument, StandardFonts } = PDFLib;
+    const doc = await PDFDocument.load(bytes);
+    const font = await doc.embedFont(StandardFonts.Helvetica);
+    const [p1, p2] = doc.getPages(); const H = p1.getHeight();
+    const w1 = mkWriter(p1, font, H), w2 = mkWriter(p2, font, H);
+    w1.fit(56, 91.8, d.paciente.nome, 410, 9.5);
+    w1.fit(40, 169.8, d.medico.nome, 430, 9.5);
+    w2.text(72, 341.1, d.local || 'Londrina - PR', 9);
+    w2.text(349, 341.1, fmtDate(d.dataSolicitacao), 9);
+    w2.fit(131, 355.5, d.paciente.nome, 420, 9);
+    w2.fit(163, 369.9, d.paciente.cns, 300, 9);
+    if (d.incapaz) { w2.fit(169, 385.2, d.responsavel, 380, 9); w2.fit(283, 400.2, d.responsavelDoc, 270, 9); }
+    w2.fit(140, 484.9, d.medico.nome, 192, 9);
+    w2.text(365, 484.9, d.medico.crm, 9);
+    w2.text(470, 484.9, d.medico.uf || 'PR', 9);
+    w2.text(318, 553.0, fmtDate(d.dataSolicitacao), 9);
+    return await doc.save({ useObjectStreams: false });
+  }
+  async function fillMEEM(PDFLib, bytes, d) {
+    const { PDFDocument, StandardFonts } = PDFLib;
+    const doc = await PDFDocument.load(bytes);
+    const font = await doc.embedFont(StandardFonts.Helvetica);
+    const page = doc.getPages()[0]; const H = page.getHeight();
+    const w = mkWriter(page, font, H); const p = d.prot;
+    w.fit(152, 119.8, d.paciente.nome, 320, 9.5);
+    if (p.meemData) { const [y, m, dd] = p.meemData.split('-'); w.text(151, 133.6, dd, 9.5); w.text(173, 133.6, m, 9.5); w.text(195, 133.6, y.slice(2), 9.5); }
+    w.text(290, 147.4, p.anosEstudo || '', 9.5);
+    if (p.meem) w.text(120, 580.4, `Escore do paciente: ${p.meem}`, 10);
+    return await doc.save({ useObjectStreams: false });
+  }
+  async function fillCDR(PDFLib, bytes, d) {
+    // A página do CDR é desenhada girada (texto lido de baixo para cima)
+    const { PDFDocument, StandardFonts, degrees } = PDFLib;
+    const doc = await PDFDocument.load(bytes);
+    const font = await doc.embedFont(StandardFonts.Helvetica);
+    const page = doc.getPages()[0]; const H = page.getHeight(); const p = d.prot;
+    const up = (xBase, topStart, s, size = 8) => { if (!s) return; page.drawText(String(s).replace(/[^\x20-\x7E -ÿ]/g, ''), { x: xBase, y: H - topStart, size, font, rotate: degrees(90) }); };
+    up(99.6, 664, d.paciente.nome, 7);
+    if (p.cdrData) { const [y, m, dd] = p.cdrData.split('-'); up(108.3, 671, `${dd}/${m}/${y.slice(2)}`, 7); }
+    up(116.9, 665, p.cdr, 7.5);
+    return await doc.save({ useObjectStreams: false });
+  }
+
+  // ---------- TER Epilepsia (PCDT 2018 — modelo digitalizado da SESA-PR) ----------
+  const EPI_TER_ROWS = { valproato: 626, carbamazepina: 650, clobazam: 674, clonazepam: 699, etossuximida: 724, fenitoina: 748, fenobarbital: 773, gabapentina: 798, levetiracetam: 824, lamotrigina: 849, topiramato: 873, primidona: 898, vigabatrina: 923 };
+  async function fillTerEPI(PDFLib, bytes, d) {
+    const { PDFDocument, StandardFonts } = PDFLib;
+    const doc = await PDFDocument.load(bytes);
+    const font = await doc.embedFont(StandardFonts.Helvetica);
+    const [p1, p2] = doc.getPages(); const H = p1.getHeight();
+    const w1 = mkWriter(p1, font, H), w2 = mkWriter(p2, font, H);
+    const T = (x, top) => top + 3 + (x - 100) * 0.012; // a tabela do modelo digitalizado está levemente inclinada
+    w1.fit(110, 265, d.paciente.nome, 228, 9.5);
+    w1.fit(64, 340, d.medico.nome, 170, 9);
+    ((d.prot && d.prot.medsSel) || []).forEach((k) => { const c = EPI_TER_ROWS[k]; if (!c) return; const xp = (198 - (c - 626) * 8 / 297) / 2 + 0.8; w2.x(xp, (c + 6) / 2 - 7); });
+    w2.text(100, T(100, 482), d.local || 'Londrina - PR', 9);
+    w2.text(281, T(281, 482), fmtDate(d.dataSolicitacao), 9);
+    w2.fit(155, T(155, 494.5), d.paciente.nome, 355, 9);
+    w2.fit(186, T(186, 507.5), d.paciente.cns, 300, 9);
+    if (d.incapaz) { w2.fit(190, T(190, 520.5), d.responsavel, 320, 9); w2.fit(283, T(283, 535), d.responsavelDoc, 225, 9); }
+    w2.fit(160, T(160, 584.5), d.medico.nome, 175, 9);
+    w2.fit(366, T(366, 584.5), d.medico.crm, 19, 9);
+    w2.text(404, T(404, 584.5), d.medico.uf || 'PR', 9);
+    w2.text(268, T(268, 636), fmtDate(d.dataSolicitacao), 9);
+    return await doc.save({ useObjectStreams: false });
+  }
+
+  async function mergePdfs(PDFLib, list) {
+    const out = await PDFLib.PDFDocument.create();
+    for (const b of list) {
+      const src = await PDFLib.PDFDocument.load(b);
+      const pages = await out.copyPages(src, src.getPageIndices());
+      pages.forEach(p => out.addPage(p));
+    }
+    return await out.save({ useObjectStreams: false });
+  }
+
+  const api = { fillLME, fillRelEM, fillTerEM, fillRelDA, fillTerDA, fillRelDDP, fillTerDP, fillMEEM, fillCDR, fillTerEPI, mergePdfs, fmtDate };
+  if (typeof module !== 'undefined') module.exports = api; else root.LMEFill = api;
+})(this);
+</script>
+<script>/* Base de regras por protocolo (PCDT) — LME Fácil
+   Fontes: Consulta de Medicamentos da Farmácia do Paraná (api.saude.pr.gov.br/governo-digital/farmacia/consulta);
+   PCDT EM (Portaria Conjunta SAES/SECTICS/MS nº 8/2024); PCDT Doença de Alzheimer (Portaria Conjunta SAES/SECTICS nº 27/2025);
+   PCDT Epilepsia (Portaria Conjunta SAS/SCTIE/MS nº 17/2018);
+   modelos oficiais SESA-PR (Relatórios específicos, TER, MEEM, CDR); Nota Técnica nº 01/2026 CEMEPAR (Res. SESA 910/2026) para Lista C1. */
+(function () {
+  const UNI = ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove', 'dez', 'onze', 'doze', 'treze', 'quatorze', 'quinze', 'dezesseis', 'dezessete', 'dezoito', 'dezenove'];
+  const DEZ = ['', '', 'vinte', 'trinta', 'quarenta', 'cinquenta', 'sessenta', 'setenta', 'oitenta', 'noventa'];
+  const CEN = ['', 'cento', 'duzentos', 'trezentos', 'quatrocentos', 'quinhentos', 'seiscentos', 'setecentos', 'oitocentos', 'novecentos'];
+  function extenso(n, fem) {
+    const f = (s) => fem ? s.replace(/^um$/, 'uma').replace(/^dois$/, 'duas').replace(/entos$/, 'entas') : s;
+    if (n < 20) return f(UNI[n]);
+    if (n < 100) { const d = Math.floor(n / 10), u = n % 10; return DEZ[d] + (u ? ' e ' + f(UNI[u]) : ''); }
+    if (n === 100) return 'cem';
+    if (n < 1000) { const c = Math.floor(n / 100), r = n % 100; return f(CEN[c]) + (r ? ' e ' + extenso(r, fem) : ''); }
+    if (n < 1000000) { const m = Math.floor(n / 1000), r = n % 1000; return (m === 1 ? 'mil' : extenso(m, fem) + ' mil') + (r ? ((r < 100 || r % 100 === 0) ? ' e ' : ' ') + extenso(r, fem) : ''); }
+    return String(n);
+  }
+  const sum = (a) => a.reduce((x, y) => x + y, 0);
+  const fmt = (iso) => { if (!iso) return ''; const [y, m, d] = iso.split('-'); return `${d}/${m}/${y}`; };
+  const $ = (id) => document.getElementById(id);
+  const v = (id) => (($(id) || {}).value || '').trim();
+  const radio = (n) => { const r = document.querySelector(`input[name="${n}"]:checked`); return r ? r.value : ''; };
+  const chk = (id) => !!($(id) && $(id).checked);
+
+  // Linha de receita a partir das quantidades mensais
+  function rxLine(i, it) {
+    const tot = sum(it.qtd);
+    return [`${i}) ${it.nome} ........ ${tot} (${extenso(tot, it.fem)}) ${it.unid}`, `   ${it.pos}`];
+  }
+  function receitaBase(d, itens, titulo, extra) {
+    const L = [];
+    if (titulo) L.push(titulo, '');
+    L.push(`Paciente: ${d.paciente.nome || '________________'}`);
+    L.push(`CNS: ${d.paciente.cns || '________________'}        CID-10: ${d.cid}`, '');
+    itens.forEach((it, k) => { L.push(...rxLine(k + 1, it), ''); });
+    (extra || []).forEach((x) => L.push(x));
+    L.push('', `${d.local || 'Londrina - PR'}, ${d.dataExtenso}.`, '', `${d.medico.nome || '________________'} — CRM-${d.medico.uf || 'PR'} ${d.medico.crm || '______'}`);
+    return L.join('\n');
+  }
+
+  // =====================================================================
+  // ESCLEROSE MÚLTIPLA (G35) — todos os medicamentos da Farmácia do Paraná
+  // =====================================================================
+  const EL = (opt, unid, nome, qtd, pos, fem) => ({ lmeOption: opt, unid, nome, qtd, pos, fem: !!fem });
+  const R6 = (n) => [n, n, n, n, n, n];
+  // Cladribina: comprimidos por semana de tratamento, por faixa de peso (bula) — [semana 1, semana 2]
+  const CLAD = [[40, 4, 4], [50, 5, 5], [60, 6, 6], [70, 7, 7], [80, 8, 7], [90, 9, 8], [100, 10, 9], [110, 10, 10]];
+  const cladTabs = (peso) => { const p = parseFloat(String(peso).replace(',', '.')); if (isNaN(p) || p < 40) return null; let r = CLAD[0]; CLAD.forEach((c) => { if (p >= c[0]) r = c; }); return [r[1], r[2]]; };
+  const cladDias = (n) => { const b = Math.floor(n / 5), x = n % 5; return Array.from({ length: 5 }, (_, i) => b + (i < x ? 1 : 0)); };
+  const EM_MEDS = {
+    beta22: { nome: 'Betainterferona 1a 22 mcg SC 3x/semana', grupo: 'baixa', linha: 1, rel: [81.8, 256.4] },
+    beta44: { nome: 'Betainterferona 1a 44 mcg SC 3x/semana', grupo: 'baixa', linha: 1, rel: [81.8, 256.4] },
+    beta30: { nome: 'Betainterferona 1a 30 mcg IM 1x/semana', grupo: 'baixa', linha: 1, rel: [81.8, 256.4] },
+    beta1b: { nome: 'Betainterferona 1b 250 mcg SC em dias alternados', grupo: 'baixa', linha: 1, rel: [81.8, 256.4] },
+    glat: { nome: 'Glatirâmer 40 mg SC 3x/semana', grupo: 'baixa', linha: 1, rel: [177.4, 248.0] },
+    teri: { nome: 'Teriflunomida 14 mg', grupo: 'baixa', linha: 1, rel: [293.0, 248.0], tb: true },
+    fum: { nome: 'Fumarato de dimetila', grupo: 'baixa', linha: 1, rel: [177.4, 256.4] },
+    aza: { nome: 'Azatioprina', grupo: 'baixa', linha: 1, rel: [81.8, 248.0] },
+    fingo: { nome: 'Fingolimode 0,5 mg', grupo: 'baixa', linha: 2, rel: [378.5, 247.6] },
+    nata3: { nome: 'Natalizumabe 300 mg IV (baixa/moderada — 3ª linha)', grupo: 'baixa', linha: 3, rel: [455.0, 247.6], nata: true },
+    nata1: { nome: 'Natalizumabe 300 mg IV (alta atividade — 1ª linha)', grupo: 'alta', linha: 1, rel: [115.0, 299.6], nata: true },
+    clad: { nome: 'Cladribina 10 mg oral (alta atividade — 2ª linha)', grupo: 'alta', linha: 2, rel: [271.0, 299.6], tb: true },
+    alem: { nome: 'Alentuzumabe 12 mg IV (alta atividade — 3ª linha)', grupo: 'alta', linha: 3, rel: [417.8, 299.6], tb: true },
+    gaba: { nome: 'Gabapentina — espasticidade (NT estadual)', grupo: 'gaba', linha: 0 },
+  };
+  const optGroup = (g, label) => `<optgroup label="${label}">${Object.entries(EM_MEDS).filter(([, m]) => m.grupo === g).map(([k, m]) => `<option value="${k}">${m.nome}</option>`).join('')}</optgroup>`;
+
+  const EM = {
+    id: 'em',
+    nome: 'Esclerose Múltipla — todos os medicamentos (G35)',
+    cids: [{ cid: 'G35', diag: 'Esclerose múltipla' }],
+    protocolo: 'PCDT Esclerose Múltipla — Portaria Conjunta SAES/SECTICS/MS nº 8, de 12/09/2024',
+    consultadoEm: '2026-11-12',
+    pdfs: { rel: 'REL_EM', ter: 'TER_EM' },
+    fill: { rel: 'fillRelEM', ter: 'fillTerEM' },
+    labels: { rel: 'Relatório Específico de EM', ter: 'TER' },
+    medsHTML: `
+      <div class="grid">
+        <div class="c8"><label>Medicamento <span class="req">*</span></label>
+          <select id="emMed"><option value="">— escolher —</option>${optGroup('baixa', 'EM-RR de baixa/moderada atividade')}${optGroup('alta', 'EM-RR de alta atividade')}${optGroup('gaba', 'Espasticidade')}</select></div>
+        <div class="c4"><label>Linha no relatório</label><div class="muted-box" id="emLinha" style="padding:7px 10px">—</div></div>
+        <div class="c6 hide" id="emFumBox"><label>Já fez a dose inicial de 120 mg? (item do relatório)</label>
+          <div class="opts"><label><input type="radio" name="emFumIni" value="nao" checked> Não — iniciar com titulação</label><label><input type="radio" name="emFumIni" value="sim"> Sim — 240 mg 12/12h</label></div></div>
+        <div class="c6 hide" id="emAzaBox"><label>Dose de azatioprina (2–3 mg/kg/dia)</label><select id="emAzaDose"><option value="100">100 mg/dia (2 cp)</option><option value="150" selected>150 mg/dia (3 cp)</option><option value="200">200 mg/dia (4 cp)</option><option value="250">250 mg/dia (5 cp)</option></select><div class="small" id="emAzaSug"></div></div>
+        <div class="c6 hide" id="emAnoBox"><label>Curso</label><div class="opts"><label><input type="radio" name="emAno" value="1" checked> Ano 1</label><label><input type="radio" name="emAno" value="2"> Ano 2</label></div><div class="small" id="emCladSug"></div></div>
+        <div class="c6 hide" id="emGabaBox"><label>Esquema da gabapentina</label><select id="emGabaEsq"><option value="300x3">300 mg 8/8h</option><option value="600x3">600 mg 8/8h (2 cáps de 300)</option><option value="400x3">400 mg 8/8h</option></select>
+          <label class="opts" style="margin-top:6px"><input type="checkbox" id="emGabaCad" checked> Já cadastrado no CEAF pelo PCDT de EM (dispensa o laudo de RM)</label></div>
+        <div class="c12" id="emFormaBox"><label>Forma clínica <span class="req">*</span></label>
+          <div class="opts">
+            <label><input type="radio" name="forma" value="EM-RR" checked> EM-RR (remitente-recorrente)</label>
+            <label><input type="radio" name="forma" value="EM-SP"> EM-SP (secundariamente progressiva)</label>
+            <label><input type="radio" name="forma" value="EM-PP"> EM-PP (primariamente progressiva)</label>
+            <label><input type="radio" name="forma" value="CIS"> Síndrome clinicamente isolada</label>
+          </div></div>
+        <div class="c12 hide" id="altaBox"><label>Critério de alta atividade (item 5 do relatório) <span class="req">*</span></label>
+          <div class="radio-cards">
+            <label><input type="radio" name="critAlta" value="virgem"> <span><b>Não tratado:</b> ≥ 2 surtos incapacitantes com resolução incompleta + ≥ 1 nova lesão captante de gadolínio ou aumento significativo da carga em T2 no ano anterior.</span></label>
+            <label><input type="radio" name="critAlta" value="falha"> <span><b>Em uso adequado de ≥ 1 MMCD:</b> ≥ 1 surto no último ano durante o tratamento + ≥ 9 lesões em T2 ou ≥ 1 nova lesão captante de gadolínio (sem intolerância/não adesão).</span></label>
+          </div></div>
+        <div class="c12 hide" id="fingoBox"><label>Motivo da troca para natalizumabe (3ª linha) <span class="req">*</span></label>
+          <div class="opts">
+            <label><input type="radio" name="fingo" value="falha"> Falha / intolerância / evento adverso ao fingolimode</label>
+            <label><input type="radio" name="fingo" value="contra"> Contraindicação ao fingolimode</label>
+          </div></div>
+        <div class="c12 hide" id="emTbBox"><label>Exames complementares do relatório (alentuzumabe, cladribina, teriflunomida) <span class="req">*</span></label>
+          <div class="grid">
+            <div class="c6"><label>PPD (ou IGRA)</label><select id="emPpd"><option value="">—</option><option value="nr">Não reator</option><option value="ate5">Até 5 mm</option><option value="mais5">Mais de 5 mm</option></select></div>
+            <div class="c3"><label>Tratou TB latente?</label><select id="emTbl"><option value="">—</option><option value="sim">Sim</option><option value="nao">Não</option></select></div>
+            <div class="c3"><label>Raio X de tórax</label><select id="emRx"><option value="">—</option><option value="normal">Normal</option><option value="alterado">Alterado</option></select></div>
+          </div></div>
+        <div class="c12 hide" id="emLabBox"><label>Exames laboratoriais (para checar critérios de exclusão — opcional)</label>
+          <div class="lab">
+            <div><label>Linfócitos (/mm³)</label><input type="number" id="labLinf" min="0"></div>
+            <div><label>TGO / LSN</label><div class="pair"><input type="number" id="labTgo" placeholder="valor"><input type="number" id="labTgoL" placeholder="LSN"></div></div>
+            <div><label>TGP / LSN</label><div class="pair"><input type="number" id="labTgp" placeholder="valor"><input type="number" id="labTgpL" placeholder="LSN"></div></div>
+            <div><label>Gama-GT / LSN</label><div class="pair"><input type="number" id="labGgt" placeholder="valor"><input type="number" id="labGgtL" placeholder="LSN"></div></div>
+            <div><label>Bilirrubina total / LSN</label><div class="pair"><input type="number" id="labBt" step="0.1" placeholder="valor"><input type="number" id="labBtL" step="0.1" placeholder="LSN"></div></div>
+          </div></div>
+        <div class="c12"><div class="muted-box" id="emQtd"></div></div>
+        <div class="c12" id="emCiBox"><label class="opts"><input type="checkbox" id="declaraCI" checked> Declaro que o paciente foi avaliado e não possui contraindicações absolutas (último item do relatório)</label></div>
+      </div>`,
+    clinicoHTML: `
+      <div class="grid" id="emClin">
+        <div class="c3"><label>Data da RM de encéfalo</label><input type="date" id="rmData"></div>
+        <div class="c3"><label>Nº de lesões na RM</label><input type="text" id="rmLes" placeholder="ex.: 12 (2 captantes)"></div>
+        <div class="c3"><label>Data do EDSS</label><input type="date" id="edssData"></div>
+        <div class="c3"><label>EDSS <span class="req">*</span></label><input type="text" id="edss" placeholder="ex.: 3,5"></div>
+        <div class="c12"><label>Número de surtos</label><input type="text" id="surtos" placeholder="ex.: 2 surtos nos últimos 12 meses (03/2026 e 08/2026), com resolução incompleta"></div>
+      </div>`,
+    clearIds: ['labLinf', 'labTgo', 'labTgoL', 'labTgp', 'labTgpL', 'labGgt', 'labGgtL', 'labBt', 'labBtL', 'rmData', 'rmLes', 'edssData', 'edss', 'surtos'],
+    clearSelects: ['emMed', 'emPpd', 'emTbl', 'emRx'],
+    clearRadios: ['critAlta', 'fingo'],
+    read() {
+      const med = v('emMed'), m = EM_MEDS[med] || null;
+      return {
+        med, m, grupo: m ? m.grupo : '', linha: m ? (m.grupo === 'alta' ? 'alta' : med === 'nata3' ? 'baixa3' : 'baixa') : '',
+        forma: radio('forma'), criterioAlta: radio('critAlta'), fingoMotivo: radio('fingo'),
+        fumIni: radio('emFumIni'), azaDose: +v('emAzaDose'), ano: radio('emAno'), gabaEsq: v('emGabaEsq'), gabaCad: chk('emGabaCad'),
+        ppd: v('emPpd'), tbl: v('emTbl'), rx: v('emRx'),
+        rmData: v('rmData'), rmLesoes: v('rmLes'), surtos: v('surtos'), edssData: v('edssData'), edss: v('edss'),
+        declaraCI: chk('declaraCI'), linf: v('labLinf'), peso: v('pPeso'),
+      };
+    },
+    ui(p) {
+      const m = p.m, gaba = p.med === 'gaba';
+      $('emLinha').textContent = !m ? '—' : gaba ? 'fora do relatório (NT estadual)' : `${m.grupo === 'alta' ? 'Alta atividade' : 'Baixa/moderada'} — ${m.linha}ª linha`;
+      $('emFumBox').classList.toggle('hide', p.med !== 'fum');
+      $('emAzaBox').classList.toggle('hide', p.med !== 'aza');
+      $('emAnoBox').classList.toggle('hide', !['clad', 'alem'].includes(p.med));
+      $('emGabaBox').classList.toggle('hide', !gaba);
+      $('emFormaBox').classList.toggle('hide', gaba);
+      $('emCiBox').classList.toggle('hide', gaba);
+      $('altaBox').classList.toggle('hide', p.grupo !== 'alta');
+      $('fingoBox').classList.toggle('hide', p.med !== 'nata3');
+      $('emTbBox').classList.toggle('hide', !(m && m.tb));
+      $('emLabBox').classList.toggle('hide', !m || gaba);
+      $('emClin').classList.toggle('hide', gaba);
+      const kg = parseFloat(String(p.peso).replace(',', '.'));
+      $('emAzaSug').textContent = isNaN(kg) ? 'Informe o peso para ver a faixa de 2–3 mg/kg.' : `Peso ${kg} kg → 2–3 mg/kg = ${Math.round(kg * 2)}–${Math.round(kg * 3)} mg/dia.`;
+      const ct = cladTabs(p.peso);
+      $('emCladSug').textContent = p.med === 'clad' ? (ct ? `Peso ${p.peso} kg → semana 1: ${ct[0]} cp · semana 2: ${ct[1]} cp (dose cumulativa 3,5 mg/kg em 2 anos).` : 'Informe o peso (≥ 40 kg) para calcular os comprimidos.') : (p.med === 'alem' ? 'Ano 1: 5 dias consecutivos (5 frascos) · Ano 2: 3 dias consecutivos (3 frascos), 12 meses após o 1º curso.' : '');
+      const lines = this.meds(p);
+      $('emQtd').innerHTML = lines.length ? '<b>Quantidades na LME (mês 1 → 6):</b><br>' + lines.map((l) => `${l.lmeOption.trim()}: ${l.qtd.join(' · ')}`).join('<br>') : 'Escolha o medicamento.';
+    },
+    meds(p) {
+      switch (p.med) {
+        case 'beta22': return [EL('Betainterferona 1a 6.000.000 UI (22 mcg) (seringa preenchida)', 'seringas preenchidas', 'Betainterferona 1a 22 mcg (6.000.000 UI), seringa preenchida', R6(12), 'Aplicar 1 seringa (22 mcg) por via subcutânea 3 vezes por semana, em dias alternados\n   (ex.: segunda, quarta e sexta), sempre no mesmo horário. Uso contínuo.', true)];
+        case 'beta44': return [EL('Betainterferona 1a 12.000.000 UI (44 mcg) (seringa preenchida)', 'seringas preenchidas', 'Betainterferona 1a 44 mcg (12.000.000 UI), seringa preenchida', R6(12), 'Aplicar 1 seringa (44 mcg) por via subcutânea 3 vezes por semana, em dias alternados\n   (ex.: segunda, quarta e sexta), sempre no mesmo horário. Uso contínuo.', true)];
+        case 'beta30': return [EL('Betainterferona 1a 6.000.000 UI (30mcg) (caneta preenchida)', 'canetas preenchidas', 'Betainterferona 1a 30 mcg (6.000.000 UI), caneta preenchida', R6(4), 'Aplicar 1 caneta (30 mcg) por via intramuscular 1 vez por semana, sempre no mesmo dia. Uso contínuo.', true)];
+        case 'beta1b': return [EL('Betainterferona 1b 9.600.000 UI (300 mcg) (frasco-ampola)', 'frascos-ampola', 'Betainterferona 1b 300 mcg (9.600.000 UI), frasco-ampola', R6(15), 'Reconstituir o frasco e aplicar 1 mL (250 mcg / 8.000.000 UI) por via subcutânea em dias alternados. Uso contínuo.')];
+        case 'glat': return [EL('Glatirâmer 40 mg injetável (seringa preenchida)  ', 'seringas preenchidas', 'Glatirâmer 40 mg/mL, seringa preenchida', R6(12), 'Aplicar 1 seringa (40 mg) por via subcutânea 3 vezes por semana, com pelo menos 48 horas\n   de intervalo entre as doses. Uso contínuo.', true)];
+        case 'teri': return [EL('Teriflunomida 14 mg (comprimido)', 'comprimidos', 'Teriflunomida 14 mg, comprimido', R6(30), 'Tomar 1 comprimido por via oral 1 vez ao dia. Uso contínuo.')];
+        case 'fingo': return [EL('Fingolimode 0,5 mg (cápsula)', 'cápsulas', 'Fingolimode 0,5 mg, cápsula', R6(30), 'Tomar 1 cápsula por via oral 1 vez ao dia. Primeira dose com monitorização (ECG e sinais vitais por 6 horas). Uso contínuo.', true)];
+        case 'fum':
+          if (p.fumIni === 'sim') return [EL('Fumarato de dimetila 240 mg (comprimido)', 'cápsulas', 'Fumarato de dimetila 240 mg, cápsula', R6(60), 'Tomar 1 cápsula por via oral de 12/12 horas, com alimentos. Uso contínuo.', true)];
+          return [EL('Fumarato de dimetila 120 mg (comprimido)', 'cápsulas', 'Fumarato de dimetila 120 mg, cápsula', [14, 0, 0, 0, 0, 0], 'Tomar 1 cápsula por via oral de 12/12 horas, com alimentos, nos primeiros 7 dias.', true),
+            EL('Fumarato de dimetila 240 mg (comprimido)', 'cápsulas', 'Fumarato de dimetila 240 mg, cápsula', [46, 60, 60, 60, 60, 60], 'A partir do 8º dia, tomar 1 cápsula por via oral de 12/12 horas, com alimentos. Uso contínuo.', true)];
+        case 'aza': { const n = Math.round((p.azaDose || 150) / 50); return [EL('Azatioprina 50 mg (comprimido)', 'comprimidos', 'Azatioprina 50 mg, comprimido', R6(n * 30), `Tomar ${n} comprimidos por via oral ao dia (${n * 50} mg/dia), após uma refeição. Uso contínuo.`)]; }
+        case 'nata1': case 'nata3': return [EL('Natalizumabe 300 mg (frasco-ampola)', 'frascos-ampola', 'Natalizumabe 300 mg/15 mL (20 mg/mL), frasco-ampola', R6(1), 'Diluir 1 frasco-ampola (300 mg) em 100 mL de cloreto de sódio 0,9% e administrar por via intravenosa\n   em aproximadamente 1 hora, a cada 4 semanas. Observar o paciente durante a infusão e por 1 hora após o término.')];
+        case 'clad': {
+          const t = cladTabs(p.peso); if (!t) return [];
+          const d1 = cladDias(t[0]).join('-'), d2 = cladDias(t[1]).join('-');
+          return [EL('Cladribina 10 mg (comprimido)', 'comprimidos', 'Cladribina 10 mg, comprimido', [t[0], t[1], 0, 0, 0, 0], `Ano ${p.ano || 1} — semana 1 (mês 1): ${t[0]} comprimidos em 5 dias consecutivos (${d1} cp/dia);\n   semana 2 (mês 2): ${t[1]} comprimidos em 5 dias consecutivos (${d2} cp/dia). Tomar com água, sem mastigar.`)];
+        }
+        case 'alem': { const n = p.ano === '2' ? 3 : 5; return [EL('Alentuzumabe 10 mg/ml sol inj (fr-amp) 1,2 ml', 'frascos-ampola', 'Alentuzumabe 12 mg/1,2 mL (10 mg/mL), frasco-ampola', [n, 0, 0, 0, 0, 0], `Ano ${p.ano || 1}: diluir 12 mg (1 frasco) em 100 mL de cloreto de sódio 0,9% ou glicose 5% e infundir por via\n   intravenosa em 4 horas, 1 vez ao dia por ${n} dias consecutivos. Pré-medicação com metilprednisolona 1 g IV nos 3 primeiros dias.`)]; }
+        case 'gaba': {
+          if (p.gabaEsq === '600x3') return [EL('Gabapentina 300 mg (cápsula)', 'cápsulas', 'Gabapentina 300 mg, cápsula', R6(180), 'Tomar 2 cápsulas por via oral de 8/8 horas. Uso contínuo.', true)];
+          if (p.gabaEsq === '400x3') return [EL('Gabapentina 400 mg (cápsula)', 'cápsulas', 'Gabapentina 400 mg, cápsula', R6(90), 'Tomar 1 cápsula por via oral de 8/8 horas. Uso contínuo.', true)];
+          return [EL('Gabapentina 300 mg (cápsula)', 'cápsulas', 'Gabapentina 300 mg, cápsula', R6(90), 'Tomar 1 cápsula por via oral de 8/8 horas. Uso contínuo.', true)];
+        }
+        default: return [];
+      }
+    },
+    docs(tipo, p) {
+      const med = p && p.med;
+      const presc = { id: 'presc', nome: 'Prescrição médica feita por neurologista', validade: 3, gerado: 'receita' };
+      const lme = { id: 'lme', nome: 'LME adequadamente preenchida', validade: 3, gerado: 'lme' };
+      const ter = { id: 'ter', nome: 'Termo de Esclarecimento e Responsabilidade (TER) do PCDT de EM', validade: 3, gerado: 'ter' };
+      const rm = { id: 'rm', nome: 'Laudo de ressonância magnética de encéfalo', validade: 12, exame: true, dateField: 'rmData', fieldLabel: 'data da RM (passo 4)' };
+      if (med === 'gaba') {
+        if (tipo === 'inicial') return [presc, lme, ter, ...(p.gabaCad ? [] : [{ id: 'rm', nome: 'Laudo de ressonância magnética de encéfalo (não cadastrado no PCDT de EM)', validade: 12, exame: true }])];
+        return [presc, lme];
+      }
+      const rel = { id: 'rel', nome: 'Relatório Médico Específico para Esclerose Múltipla', validade: 3, gerado: 'rel' };
+      const edss = { id: 'edss', nome: 'Valor do EDSS (vai na anamnese da LME)', validade: 6, exame: true, dateField: 'edssData', fieldLabel: 'data do EDSS (passo 4)' };
+      const lab = (id, nome) => ({ id, nome, validade: 6, exame: true, lab: true });
+      if (tipo === 'inicial') return [presc, lme, rel, ter, rm, lab('hemo', 'Hemograma com contagem de linfócitos'), lab('tgo', 'AST/TGO'), lab('tgp', 'ALT/TGP'), lab('ggt', 'Gama-GT'), lab('bt', 'Bilirrubinas totais'), edss];
+      if (tipo === 'adequacao') return [presc, lme, rel, rm, edss];
+      return [presc, lme, lab('tgo', 'AST/TGO'), lab('tgp', 'ALT/TGP'), ...(med === 'clad' ? [lab('hemo', 'Hemograma com contagem de linfócitos')] : []), edss];
+    },
+    outputs(tipo, p) {
+      if (p && p.med === 'gaba') return tipo === 'inicial' ? ['lme', 'ter'] : ['lme'];
+      return tipo === 'inicial' ? ['lme', 'rel', 'ter'] : tipo === 'adequacao' ? ['lme', 'rel'] : ['lme'];
+    },
+    alerts(d, push, num) {
+      const r = d.prot, tipo = d.tipo, med = r.med;
+      if (!med) { push('bad', 'Escolha o medicamento.'); return; }
+      if (med === 'gaba') {
+        push('info', 'Gabapentina para espasticidade moderada a grave na EM (Nota Técnica estadual): inicial pede prescrição de neurologista, LME e TER do PCDT de EM; laudo de RM só se o paciente não estiver cadastrado no PCDT de EM.');
+        push('info', 'Gabapentina é Lista C1: receita de controle especial em 2 vias, validade de 30 dias.');
+        return;
+      }
+      if (r.forma === 'EM-PP') push('bad', 'EM primariamente progressiva: o PCDT não prevê MMCD (critério de exclusão).');
+      if (r.forma === 'CIS') push('warn', 'Síndrome clinicamente isolada: o PCDT trata EM confirmada (McDonald 2017). Revise a indicação.');
+      if (r.forma === 'EM-SP') push('warn', 'EM-SP: os critérios do PCDT são para EM-RR. Revise a indicação.');
+      const prev = d.tratPrevioTexto || '';
+      if (r.grupo === 'alta' && !r.criterioAlta) push('bad', 'Alta atividade: marque o critério de inclusão (item 5 do relatório).');
+      if (r.grupo === 'alta' && r.criterioAlta === 'falha' && !prev) push('bad', 'Critério "em uso de MMCD" exige descrever o tratamento prévio (medicamento e tempo).');
+      if (med === 'fingo' && !prev) push('bad', 'Fingolimode é 2ª linha: descreva o MMCD de 1ª linha usado e o motivo da troca (falha, intolerância ou evento adverso).');
+      if (med === 'nata3' && !r.fingoMotivo) push('bad', '3ª linha: informe se houve falha ou contraindicação ao fingolimode.');
+      if (med === 'nata3' && r.fingoMotivo !== 'contra' && !/fingolimod/i.test(prev)) push('bad', '3ª linha por falha: descreva o uso de fingolimode nos tratamentos prévios.');
+      if ((med === 'clad' || med === 'alem') && !prev) push('bad', `${med === 'clad' ? 'Cladribina (2ª linha)' : 'Alentuzumabe (3ª linha)'} na alta atividade: descreva o tratamento anterior e o motivo da troca (campo "medicamentos já utilizados" do relatório).`);
+      if (r.m && r.m.tb && tipo === 'inicial') {
+        if (!r.ppd) push('bad', 'Informe o PPD/IGRA (item 6 do relatório).');
+        if (r.ppd === 'mais5' && !r.tbl) push('bad', 'PPD > 5 mm: informe se tratou TB latente (item 6 do relatório).');
+        if (!r.rx) push('bad', 'Informe o raio X de tórax (item 6 do relatório).');
+        if (r.ppd === 'mais5' || r.rx === 'alterado') push('warn', 'PPD reator ou RX alterado: anexar relato de tratamento/descarte de TB ou acompanhamento com infectologista/pneumologista.');
+      }
+      if (med === 'clad' && !cladTabs(r.peso)) push('bad', 'Cladribina: informe o peso (≥ 40 kg) para calcular os comprimidos.');
+      if (med === 'aza') {
+        const kg = parseFloat(String(r.peso).replace(',', '.'));
+        if (!isNaN(kg)) { const mgkg = r.azaDose / kg; if (mgkg < 2 || mgkg > 3) push('warn', `Azatioprina ${r.azaDose} mg/dia = ${mgkg.toFixed(1)} mg/kg (PCDT: 2–3 mg/kg/dia).`); }
+        else push('warn', 'Azatioprina: informe o peso para conferir 2–3 mg/kg/dia.');
+      }
+      if (med === 'fum' && r.fumIni === 'sim' && tipo === 'inicial') push('warn', 'Fumarato: marcado que já fez a dose de 120 mg — confirme (item do relatório).');
+      if (med === 'fingo') push('info', 'Fingolimode: primeira dose com ECG e monitorização de FC/PA por 6 horas; avaliação oftalmológica (edema macular) e sorologia para varicela.');
+      if ((med === 'teri' || med === 'clad') && d.paciente.sexo === 'F') push('warn', `${med === 'teri' ? 'Teriflunomida' : 'Cladribina'} é contraindicada na gestação (categoria X): orientar contracepção eficaz.`);
+      if (!r.edss) push('bad', 'Informe o EDSS (exigido; vai na anamnese da LME e no relatório).');
+      if (!r.rmLesoes && tipo !== 'renovacao') push('warn', 'Informe o nº de lesões da RM (campo do relatório).');
+      if (!r.surtos && tipo !== 'renovacao') push('warn', 'Informe o número de surtos (campo do relatório).');
+      if (tipo === 'inicial' && !r.declaraCI) push('warn', 'Declaração de ausência de contraindicações não marcada no relatório.');
+      const linf = num('labLinf');
+      if (!isNaN(linf)) {
+        if (r.m.nata && linf < 1000) push('bad', `Linfócitos ${linf}/mm³ < 1.000: critério de exclusão do natalizumabe no PCDT.`);
+        else if (linf < 1000) push('warn', `Linfócitos ${linf}/mm³ < 1.000: avalie antes de iniciar (fingolimode, fumarato, cladribina e alentuzumabe causam linfopenia).`);
+        else push('ok', `Linfócitos ${linf}/mm³ (≥ 1.000).`);
+      }
+      [['TGO', 'labTgo', 'labTgoL', 20], ['TGP', 'labTgp', 'labTgpL', 20], ['Gama-GT', 'labGgt', 'labGgtL', 10], ['Bilirrubina total', 'labBt', 'labBtL', 10]].forEach(([n, a, b, x]) => {
+        const val = num(a), l = num(b);
+        if (!isNaN(val) && !isNaN(l) && l > 0 && val > l) {
+          if (r.m.nata && val > x * l) push('bad', `${n} > ${x}× o LSN: critério de exclusão do natalizumabe no PCDT.`);
+          else push('warn', `${n} acima do LSN (${(val / l).toFixed(1)}×) — avalie antes de iniciar.`);
+        }
+      });
+      if (d.paciente.idade != null && d.paciente.idade < 18) push('warn', `Paciente com ${d.paciente.idade} anos: confira a faixa etária aprovada em bula para o medicamento.`);
+    },
+    anamnese(d) {
+      const r = d.prot; const p = [];
+      if (r.med === 'gaba') {
+        p.push('Esclerose múltipla com espasticidade moderada a grave.');
+        if (d.tratPrevioTexto) p.push(`Tratamentos prévios: ${d.tratPrevioTexto}.`);
+        p.push(`Solicito gabapentina ${{ '300x3': '300 mg 8/8h', '600x3': '600 mg 8/8h', '400x3': '400 mg 8/8h' }[r.gabaEsq] || ''} conforme Nota Técnica estadual de espasticidade na EM.`);
+        return p.join(' ');
+      }
+      const forma = { 'EM-RR': 'remitente-recorrente', 'EM-SP': 'secundariamente progressiva', 'EM-PP': 'primariamente progressiva', CIS: 'síndrome clinicamente isolada' }[r.forma] || '___';
+      p.push(`Esclerose múltipla forma ${forma} (critérios de McDonald 2017), com lesões desmielinizantes à RM.`);
+      if (r.grupo === 'alta') {
+        p.push('EM-RR de ALTA ATIVIDADE:');
+        if (r.criterioAlta === 'virgem') p.push('não tratada, ≥ 2 surtos incapacitantes com resolução incompleta e nova lesão captante de gadolínio ou aumento significativo de carga em T2 no último ano.');
+        if (r.criterioAlta === 'falha') p.push('atividade no último ano em uso adequado de MMCD: ≥ 1 surto em tratamento e ≥ 9 lesões T2 ou ≥ 1 nova lesão captante de gadolínio.');
+      } else if (r.med === 'nata3') p.push(`EM-RR de baixa/moderada atividade com ${r.fingoMotivo === 'contra' ? 'contraindicação' : 'falha'} ao fingolimode (natalizumabe 3ª linha).`);
+      else if (r.med === 'fingo') p.push('EM-RR de baixa/moderada atividade com falha/intolerância a MMCD de 1ª linha (fingolimode 2ª linha).');
+      else if (r.m) p.push('EM-RR de baixa/moderada atividade (1ª linha).');
+      if (r.surtos) p.push(`Surtos: ${r.surtos}.`);
+      if (r.rmData || r.rmLesoes) p.push(`RM de encéfalo${r.rmData ? ' (' + fmt(r.rmData) + ')' : ''}: ${r.rmLesoes || '___'} lesões.`);
+      if (r.edss) p.push(`EDSS${r.edssData ? ' (' + fmt(r.edssData) + ')' : ''}: ${r.edss}.`);
+      if (d.tratPrevioTexto) p.push(`Tratamentos prévios: ${d.tratPrevioTexto}.`);
+      if (r.m) p.push(`Solicito ${r.m.nome.replace(/ \(.*\)$/, '').toLowerCase()}${r.med === 'clad' || r.med === 'alem' ? ' (ano ' + (r.ano || 1) + ')' : ''} (PCDT EM, Portaria Conjunta nº 8/2024).`);
+      return p.join(' ').replace(/\.\./g, '.');
+    },
+    receita(d) {
+      const r = d.prot, lines = this.meds(r);
+      if (!lines.length) return r.med === 'clad' ? 'Informe o peso do paciente para calcular a cladribina.' : 'Escolha o medicamento no passo 3.';
+      const via = { beta22: 'USO SUBCUTÂNEO', beta44: 'USO SUBCUTÂNEO', beta1b: 'USO SUBCUTÂNEO', glat: 'USO SUBCUTÂNEO', beta30: 'USO INTRAMUSCULAR', nata1: 'USO INTRAVENOSO — ADMINISTRAÇÃO EM AMBIENTE HOSPITALAR', nata3: 'USO INTRAVENOSO — ADMINISTRAÇÃO EM AMBIENTE HOSPITALAR', alem: 'USO INTRAVENOSO — ADMINISTRAÇÃO EM AMBIENTE HOSPITALAR' }[r.med] || 'USO ORAL';
+      const tit = (r.med === 'gaba' ? 'RECEITUÁRIO DE CONTROLE ESPECIAL — 1ª via: farmácia · 2ª via: paciente\n' : '') + via;
+      const extra = r.med === 'clad' ? [`Tratamento: curso do ano ${r.ano || 1} (2 semanas de tratamento, nos meses 1 e 2).`] : r.med === 'alem' ? [`Tratamento: curso do ano ${r.ano || 1}.`] : ['Tratamento para 6 (seis) meses, uso contínuo, conforme LME.'];
+      return receitaBase(d, lines, tit, extra);
+    },
+    infos: [
+      'Exigências da Farmácia do Paraná (consulta de 12/11/2026), iguais para todos os MMCD: inicial = prescrição de neurologista, LME, Relatório Específico de EM, TER, RM de encéfalo (12 meses), hemograma com linfócitos, TGO, TGP, gama-GT, bilirrubinas (6 meses) e EDSS.',
+      'Adequação (troca de medicamento/dose): prescrição, LME, Relatório Específico, RM e EDSS. Renovação: prescrição, LME, TGO, TGP e EDSS (cladribina: + hemograma).',
+      'Linhas do PCDT (relatório SESA-PR): baixa/moderada atividade — 1ª linha betainterferonas, glatirâmer, teriflunomida, fumarato de dimetila e azatioprina; 2ª fingolimode; 3ª natalizumabe. Alta atividade — 1ª natalizumabe; 2ª cladribina; 3ª alentuzumabe.',
+      'Alentuzumabe, cladribina e teriflunomida: o relatório exige PPD (ou IGRA) e raio X de tórax.',
+      'MMCD em monoterapia: o PCDT não recomenda associação; registre a suspensão do medicamento anterior.',
+      'Natalizumabe: risco de LEMP (anti-JCV positivo, uso > 2 anos e imunossupressão prévia). Conservar entre 2 °C e 8 °C.',
+      'Gabapentina (espasticidade) segue Nota Técnica estadual própria; o nabiximol (THC/CBD) também está na Farmácia do Paraná para G35, mas não foi incluído aqui.',
+    ],
+  };
+
+  // =====================================================================
+  // DOENÇA DE ALZHEIMER
+  // =====================================================================
+  const C = (o, u) => ({ opt: o, unid: u });
+  const P = {
+    d5: C('Donepezila 5 mg (comprimido)', 'comprimidos'), d10: C('Donepezila 10 mg (comprimido)', 'comprimidos'),
+    g8: C('Galantamina 8 mg (cápsula de liberação prolongada)', 'cápsulas'), g16: C('Galantamina 16 mg (cápsula de liberação prolongada)', 'cápsulas'), g24: C('Galantamina 24 mg (cápsula de liberação prolongada)', 'cápsulas'),
+    r15: C('Rivastigmina 1,5 mg (cápsula)', 'cápsulas'), r3: C('Rivastigmina 3 mg (cápsula)', 'cápsulas'), r45: C('Rivastigmina 4,5 mg (cápsula)', 'cápsulas'), r6: C('Rivastigmina 6 mg (cápsula)', 'cápsulas'),
+    p9: C('Rivastigmina 9 mg (adesivo transdérmico)', 'adesivos'), p18: C('Rivastigmina 18 mg (adesivo transdérmico)', 'adesivos'),
+    sol: C('Rivastigmina 2,0 mg/mL solução oral (frasco de 120 mL)', 'frascos de 120 mL'),
+    m10: C('Memantina 10 mg (comprimido revestido)', 'comprimidos'),
+  };
+  const L = (k, qtd, nome, pos) => ({ lmeOption: P[k].opt, unid: P[k].unid, fem: P[k].unid === 'cápsulas', qtd, nome, pos });
+  const Z = [0, 0, 0, 0, 0, 0];
+  const ESQ = {
+    donepezila: [
+      { id: 'd5to10', label: 'Titulação: 5 mg/dia por 4 semanas → 10 mg/dia', resumo: 'donepezila 5 mg/dia por 4 semanas e depois 10 mg/dia', lines: [
+        L('d5', [30, 0, 0, 0, 0, 0], 'Donepezila 5 mg, comprimido', 'Tomar 1 comprimido por via oral à noite durante as primeiras 4 semanas.'),
+        L('d10', [0, 30, 30, 30, 30, 30], 'Donepezila 10 mg, comprimido', 'A partir da 5ª semana, tomar 1 comprimido por via oral à noite. Uso contínuo.')] },
+      { id: 'd10', label: '10 mg 1x/dia (manutenção)', resumo: 'donepezila 10 mg/dia', lines: [L('d10', [30, 30, 30, 30, 30, 30], 'Donepezila 10 mg, comprimido', 'Tomar 1 comprimido por via oral à noite. Uso contínuo.')] },
+      { id: 'd5', label: '5 mg 1x/dia (manutenção)', resumo: 'donepezila 5 mg/dia', lines: [L('d5', [30, 30, 30, 30, 30, 30], 'Donepezila 5 mg, comprimido', 'Tomar 1 comprimido por via oral à noite. Uso contínuo.')] },
+    ],
+    galantamina: [
+      { id: 'g8to16', label: 'Titulação: 8 mg/dia por 4 semanas → 16 mg/dia', resumo: 'galantamina LP 8 mg/dia por 4 semanas e depois 16 mg/dia', lines: [
+        L('g8', [30, 0, 0, 0, 0, 0], 'Galantamina 8 mg, cápsula de liberação prolongada', 'Tomar 1 cápsula por via oral pela manhã, com alimento, durante as primeiras 4 semanas.'),
+        L('g16', [0, 30, 30, 30, 30, 30], 'Galantamina 16 mg, cápsula de liberação prolongada', 'A partir da 5ª semana, tomar 1 cápsula por via oral pela manhã, com alimento. Uso contínuo.')] },
+      { id: 'g8to24', label: 'Titulação: 8 → 16 → 24 mg/dia (a cada 4 semanas)', resumo: 'galantamina LP 8 mg/dia (4 semanas), 16 mg/dia (4 semanas) e depois 24 mg/dia', lines: [
+        L('g8', [30, 0, 0, 0, 0, 0], 'Galantamina 8 mg, cápsula de liberação prolongada', 'Tomar 1 cápsula por via oral pela manhã, com alimento, nas semanas 1 a 4.'),
+        L('g16', [0, 30, 0, 0, 0, 0], 'Galantamina 16 mg, cápsula de liberação prolongada', 'Tomar 1 cápsula por via oral pela manhã, com alimento, nas semanas 5 a 8.'),
+        L('g24', [0, 0, 30, 30, 30, 30], 'Galantamina 24 mg, cápsula de liberação prolongada', 'A partir da 9ª semana, tomar 1 cápsula por via oral pela manhã, com alimento. Uso contínuo.')] },
+      { id: 'g16', label: '16 mg 1x/dia (manutenção)', resumo: 'galantamina LP 16 mg/dia', lines: [L('g16', [30, 30, 30, 30, 30, 30], 'Galantamina 16 mg, cápsula de liberação prolongada', 'Tomar 1 cápsula por via oral pela manhã, com alimento. Uso contínuo.')] },
+      { id: 'g24', label: '24 mg 1x/dia (manutenção)', resumo: 'galantamina LP 24 mg/dia', lines: [L('g24', [30, 30, 30, 30, 30, 30], 'Galantamina 24 mg, cápsula de liberação prolongada', 'Tomar 1 cápsula por via oral pela manhã, com alimento. Uso contínuo.')] },
+    ],
+    rivastigmina: [
+      { id: 'rtit', label: 'Cápsulas — titulação: 1,5 → 3 → 4,5 → 6 mg 12/12h (a cada 4 semanas)', resumo: 'rivastigmina em titulação até 6 mg 12/12h', lines: [
+        L('r15', [60, 0, 0, 0, 0, 0], 'Rivastigmina 1,5 mg, cápsula', 'Tomar 1 cápsula por via oral de 12/12 horas, com alimentos, nas semanas 1 a 4.'),
+        L('r3', [0, 60, 0, 0, 0, 0], 'Rivastigmina 3 mg, cápsula', 'Tomar 1 cápsula por via oral de 12/12 horas, com alimentos, nas semanas 5 a 8.'),
+        L('r45', [0, 0, 60, 0, 0, 0], 'Rivastigmina 4,5 mg, cápsula', 'Tomar 1 cápsula por via oral de 12/12 horas, com alimentos, nas semanas 9 a 12.'),
+        L('r6', [0, 0, 0, 60, 60, 60], 'Rivastigmina 6 mg, cápsula', 'A partir da 13ª semana, tomar 1 cápsula por via oral de 12/12 horas, com alimentos. Uso contínuo.')] },
+      { id: 'r6', label: 'Cápsulas — 6 mg 12/12h (manutenção)', resumo: 'rivastigmina 6 mg 12/12h', lines: [L('r6', [60, 60, 60, 60, 60, 60], 'Rivastigmina 6 mg, cápsula', 'Tomar 1 cápsula por via oral de 12/12 horas, com alimentos. Uso contínuo.')] },
+      { id: 'r45', label: 'Cápsulas — 4,5 mg 12/12h (manutenção)', resumo: 'rivastigmina 4,5 mg 12/12h', lines: [L('r45', [60, 60, 60, 60, 60, 60], 'Rivastigmina 4,5 mg, cápsula', 'Tomar 1 cápsula por via oral de 12/12 horas, com alimentos. Uso contínuo.')] },
+      { id: 'r3', label: 'Cápsulas — 3 mg 12/12h (manutenção)', resumo: 'rivastigmina 3 mg 12/12h', lines: [L('r3', [60, 60, 60, 60, 60, 60], 'Rivastigmina 3 mg, cápsula', 'Tomar 1 cápsula por via oral de 12/12 horas, com alimentos. Uso contínuo.')] },
+      { id: 'p9to18', label: 'Adesivo — 9 mg (4,6 mg/24h) por 4 semanas → 18 mg (9,5 mg/24h)', resumo: 'rivastigmina adesivo 9 mg/dia por 4 semanas e depois 18 mg/dia', lines: [
+        L('p9', [30, 0, 0, 0, 0, 0], 'Rivastigmina 9 mg (4,6 mg/24 h), adesivo transdérmico', 'Aplicar 1 adesivo na pele limpa (costas, braço ou tórax) 1 vez ao dia, trocando a cada 24 horas e alternando o local, nas primeiras 4 semanas.'),
+        L('p18', [0, 30, 30, 30, 30, 30], 'Rivastigmina 18 mg (9,5 mg/24 h), adesivo transdérmico', 'A partir da 5ª semana, aplicar 1 adesivo 1 vez ao dia, trocando a cada 24 horas e alternando o local. Uso contínuo.')] },
+      { id: 'p18', label: 'Adesivo — 18 mg (9,5 mg/24h) 1x/dia (manutenção)', resumo: 'rivastigmina adesivo 18 mg/dia', lines: [L('p18', [30, 30, 30, 30, 30, 30], 'Rivastigmina 18 mg (9,5 mg/24 h), adesivo transdérmico', 'Aplicar 1 adesivo na pele limpa (costas, braço ou tórax) 1 vez ao dia, trocando a cada 24 horas e alternando o local. Uso contínuo.')] },
+      { id: 'p9', label: 'Adesivo — 9 mg (4,6 mg/24h) 1x/dia (manutenção)', resumo: 'rivastigmina adesivo 9 mg/dia', lines: [L('p9', [30, 30, 30, 30, 30, 30], 'Rivastigmina 9 mg (4,6 mg/24 h), adesivo transdérmico', 'Aplicar 1 adesivo na pele limpa (costas, braço ou tórax) 1 vez ao dia, trocando a cada 24 horas e alternando o local. Uso contínuo.')] },
+      { id: 'sol6', label: 'Solução oral 2 mg/mL — 6 mg (3 mL) 12/12h', resumo: 'rivastigmina solução oral 6 mg 12/12h', lines: [L('sol', [2, 2, 2, 2, 2, 2], 'Rivastigmina 2 mg/mL, solução oral, frasco de 120 mL', 'Tomar 3 mL (6 mg) por via oral de 12/12 horas, com alimentos. Uso contínuo.')] },
+      { id: 'sol45', label: 'Solução oral 2 mg/mL — 4,5 mg (2,25 mL) 12/12h', resumo: 'rivastigmina solução oral 4,5 mg 12/12h', lines: [L('sol', [2, 2, 2, 2, 2, 2], 'Rivastigmina 2 mg/mL, solução oral, frasco de 120 mL', 'Tomar 2,25 mL (4,5 mg) por via oral de 12/12 horas, com alimentos. Uso contínuo.')] },
+      { id: 'sol3', label: 'Solução oral 2 mg/mL — 3 mg (1,5 mL) 12/12h', resumo: 'rivastigmina solução oral 3 mg 12/12h', lines: [L('sol', [1, 1, 1, 1, 1, 1], 'Rivastigmina 2 mg/mL, solução oral, frasco de 120 mL', 'Tomar 1,5 mL (3 mg) por via oral de 12/12 horas, com alimentos. Uso contínuo.')] },
+    ],
+    memantina: [
+      { id: 'mtit', label: 'Titulação semanal: 5 → 10 → 15 → 20 mg/dia', resumo: 'memantina em titulação semanal até 20 mg/dia', dose20: true, lines: [
+        L('m10', [40, 60, 60, 60, 60, 60], 'Memantina 10 mg, comprimido revestido', 'Semana 1: ½ comprimido ao dia; semana 2: 1 comprimido ao dia; semana 3: 1 e ½ comprimido ao dia;\n   a partir da semana 4: 1 comprimido de 12/12 horas, por via oral. Uso contínuo.')] },
+      { id: 'm20', label: '10 mg 12/12h (20 mg/dia — manutenção)', resumo: 'memantina 20 mg/dia', dose20: true, lines: [L('m10', [60, 60, 60, 60, 60, 60], 'Memantina 10 mg, comprimido revestido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'm10', label: '10 mg 1x/dia (ex.: ClCr 5–29 mL/min)', resumo: 'memantina 10 mg/dia', lines: [L('m10', [30, 30, 30, 30, 30, 30], 'Memantina 10 mg, comprimido revestido', 'Tomar 1 comprimido por via oral 1 vez ao dia. Uso contínuo.')] },
+    ],
+  };
+  const DA_CIDS = [
+    { cid: 'F00.0', diag: 'Demência na doença de Alzheimer de início precoce' },
+  ];
+  const RANGES = { // MEEM por escolaridade: gt4 (>4 anos) / le4 (≤4 anos)
+    leve_iache: { cdr: ['1'], gt4: [12, 24], le4: [8, 21], nome: 'Demência leve — monoterapia com IAChE' },
+    mod_iache: { cdr: ['2'], gt4: [12, 24], le4: [8, 21], nome: 'Demência moderada — monoterapia com IAChE' },
+    mod_mem_iache: { cdr: ['2'], gt4: [12, 19], le4: [8, 15], nome: 'Demência moderada — memantina + IAChE' },
+    grave_mono: { cdr: ['3'], gt4: [5, 11], le4: [3, 7], nome: 'Demência grave — monoterapia com memantina ou donepezila' },
+    grave_mem_don: { cdr: ['3'], gt4: [5, 11], le4: [3, 7], nome: 'Demência grave — memantina + donepezila' },
+  };
+  function daCriterio(p) {
+    const iache = p.iache, mem = p.memantina, cdr = p.cdr;
+    if (!iache && !mem) return { erro: 'Escolha ao menos um medicamento.' };
+    if (!['1', '2', '3'].includes(cdr)) return { erro: cdr ? `CDR ${cdr}: o PCDT só cobre demência leve (CDR 1), moderada (2) ou grave (3).` : 'Informe o CDR.' };
+    if (iache && !mem) {
+      if (cdr === '1') return { c: 'leve_iache' };
+      if (cdr === '2') return { c: 'mod_iache' };
+      if (iache === 'donepezila') return { c: 'grave_mono' };
+      return { erro: 'Demência grave (CDR 3): o PCDT só prevê memantina e/ou donepezila — galantamina e rivastigmina não são cobertas.' };
+    }
+    if (mem && !iache) {
+      if (cdr === '3') return { c: 'grave_mono' };
+      return { erro: 'Memantina em monoterapia só é prevista na demência grave (CDR 3). Na moderada (CDR 2), apenas associada a IAChE.' };
+    }
+    if (cdr === '2') return { c: 'mod_mem_iache' };
+    if (cdr === '3') { if (iache === 'donepezila') return { c: 'grave_mem_don' }; return { erro: 'Demência grave (CDR 3): a associação prevista é memantina + DONEPEZILA.' }; }
+    return { erro: 'Memantina não é prevista na demência leve (CDR 1).' };
+  }
+  const iacheNome = { donepezila: 'Donepezila', galantamina: 'Galantamina', rivastigmina: 'Rivastigmina' };
+  function esqOptions(lista) { return lista.map((e) => `<option value="${e.id}">${e.label}</option>`).join(''); }
+
+  const DA = {
+    id: 'da',
+    nome: 'Doença de Alzheimer — donepezila, galantamina, rivastigmina, memantina',
+    cids: DA_CIDS, cidPadrao: 'F00.0',
+    protocolo: 'PCDT Doença de Alzheimer — Portaria Conjunta SAES/SECTICS nº 27, de 27/11/2025',
+    consultadoEm: '2026-11-11',
+    pdfs: { rel: 'REL_DA', ter: 'TER_DA', meem: 'MEEM', cdr: 'CDR' },
+    fill: { rel: 'fillRelDA', ter: 'fillTerDA', meem: 'fillMEEM', cdr: 'fillCDR' },
+    labels: { rel: 'Relatório Específico de DA', ter: 'TER', meem: 'MEEM (cabeçalho e escore)', cdr: 'CDR (cabeçalho e escore)' },
+    medsHTML: `
+      <div class="grid">
+        <div class="c6"><label>Inibidor da acetilcolinesterase (IAChE)</label>
+          <select id="daIache"><option value="">— nenhum —</option><option value="donepezila">Donepezila</option><option value="galantamina">Galantamina LP</option><option value="rivastigmina">Rivastigmina (cápsula, adesivo ou solução)</option></select></div>
+        <div class="c6" id="daIacheEsqBox"><label>Esquema do IAChE</label><select id="daIacheEsq"></select></div>
+        <div class="c6"><label class="opts" style="margin-top:22px"><input type="checkbox" id="daMem"> Memantina</label></div>
+        <div class="c6 hide" id="daMemEsqBox"><label>Esquema da memantina</label><select id="daMemEsq">${esqOptions(ESQ.memantina)}</select></div>
+        <div class="c12"><div class="muted-box" id="daQtd"></div></div>
+        <div class="c12"><label class="opts"><input type="checkbox" id="daNia" checked> Atende diagnóstico de DA provável segundo NIA-AA e ABN (item 2.1 do relatório)</label></div>
+        <div class="c12"><label class="opts"><input type="checkbox" id="daExcl" checked> Declaro que o paciente foi avaliado e não apresenta critérios de exclusão (cardiopatia/condução grave, asma/DPOC grave descompensada, lesão cerebral orgânica/metabólica não compensada; galantamina: insuficiência hepática/renal grave; memantina: ClCr &lt; 5)</label></div>
+        <div class="c4 hide" id="daClcrBox"><label>Clearance de creatinina / TFG (mL/min)</label><input type="number" id="daClcr" min="0"></div>
+      </div>`,
+    clinicoHTML: `
+      <div class="grid">
+        <div class="c3"><label>Anos completos de estudo <span class="req">*</span></label><input type="number" id="daAnos" min="0" max="30"></div>
+        <div class="c3"><label>MEEM (0–30) <span class="req">*</span></label><input type="number" id="daMeem" min="0" max="30"></div>
+        <div class="c3"><label>Data do MEEM <span class="req">*</span></label><input type="date" id="daMeemData"></div>
+        <div class="c3"></div>
+        <div class="c3"><label>CDR <span class="req">*</span></label><select id="daCdr"><option value="">—</option><option>0</option><option>0,5</option><option>1</option><option>2</option><option>3</option></select></div>
+        <div class="c3"><label>Data do CDR <span class="req">*</span></label><input type="date" id="daCdrData"></div>
+        <div class="c6"><label>Critério de inclusão (calculado)</label><div class="muted-box" id="daCrit" style="padding:7px 10px">—</div></div>
+      </div>`,
+    clearIds: ['daAnos', 'daMeem', 'daMeemData', 'daCdrData', 'daClcr'],
+    clearSelects: ['daCdr'],
+    init() {
+      const fillEsq = () => { const i = v('daIache'); $('daIacheEsq').innerHTML = i ? esqOptions(ESQ[i]) : ''; };
+      $('daIache').addEventListener('change', fillEsq); fillEsq();
+    },
+    read() {
+      const iache = v('daIache'), mem = chk('daMem');
+      const anos = v('daAnos');
+      const p = {
+        iache, memantina: mem, iacheEsq: iache ? (ESQ[iache].find((e) => e.id === v('daIacheEsq')) || ESQ[iache][0]) : null,
+        memEsq: mem ? (ESQ.memantina.find((e) => e.id === v('daMemEsq')) || ESQ.memantina[0]) : null,
+        anosEstudo: anos, escol: anos === '' ? '' : (+anos > 4 ? 'gt4' : 'le4'),
+        meem: v('daMeem'), meemData: v('daMeemData'), cdr: v('daCdr').replace(',', '.') === '0.5' ? '0,5' : v('daCdr'), cdrData: v('daCdrData'),
+        niaaa: chk('daNia'), declaraExcl: chk('daExcl'), clcr: v('daClcr'),
+      };
+      p.medsSel = [iache, mem ? 'memantina' : ''].filter(Boolean);
+      const k = daCriterio(p); p.criterio = k.c || ''; p.criterioErro = k.erro || '';
+      return p;
+    },
+    ui(p) {
+      $('daIacheEsqBox').classList.toggle('hide', !p.iache);
+      $('daMemEsqBox').classList.toggle('hide', !p.memantina);
+      $('daClcrBox').classList.toggle('hide', !p.memantina);
+      const lines = this.meds(p);
+      $('daQtd').innerHTML = lines.length ? '<b>Quantidades na LME (mês 1 → 6):</b><br>' + lines.map((l) => `${l.lmeOption}: ${l.qtd.join(' · ')}`).join('<br>') : 'Escolha o(s) medicamento(s).';
+      $('daCrit').textContent = p.criterio ? RANGES[p.criterio].nome : (p.criterioErro || '—');
+    },
+    meds(p) { return [...(p.iacheEsq ? p.iacheEsq.lines : []), ...(p.memEsq ? p.memEsq.lines : [])]; },
+    docs(tipo, p) {
+      const presc = { id: 'presc', nome: 'Receita de controle especial (Lista C1), 2 vias', validade: 0, validadeTxt: '30 dias', gerado: 'receita' };
+      const lme = { id: 'lme', nome: 'LME adequadamente preenchida', validade: 3, gerado: 'lme' };
+      const rel = { id: 'rel', nome: 'Relatório médico específico para Doença de Alzheimer', validade: 3, gerado: 'rel' };
+      const ter = { id: 'ter', nome: 'Termo de Esclarecimento e Responsabilidade (TER) do PCDT de DA', validade: 3, gerado: 'ter' };
+      const meem = { id: 'meem', nome: 'Miniexame do Estado Mental (MEEM) — formulário oficial', validade: 6, exame: true, dateField: 'daMeemData', fieldLabel: 'data do MEEM (passo 4)' };
+      const cdr = { id: 'cdr', nome: 'Escala CDR (Clinical Dementia Rating) — formulário oficial', validade: 6, exame: true, dateField: 'daCdrData', fieldLabel: 'data do CDR (passo 4)' };
+      const creat = { id: 'creat', nome: 'Clearance de creatinina OU creatinina sérica com cálculo da TFG (memantina)', validade: 6, exame: true, lab: true };
+      const m = p && p.memantina;
+      if (tipo === 'inicial') return [presc, lme, rel, ter, meem, cdr, ...(m ? [creat] : [])];
+      if (tipo === 'adequacao') return [presc, lme, rel, meem, cdr, ...(m ? [creat] : [])];
+      return [presc, lme, meem, cdr];
+    },
+    outputs(tipo) { return tipo === 'inicial' ? ['lme', 'rel', 'ter', 'meem', 'cdr'] : tipo === 'adequacao' ? ['lme', 'rel', 'meem', 'cdr'] : ['lme', 'meem', 'cdr']; },
+    alerts(d, push) {
+      const p = d.prot;
+      if (!p.iache && !p.memantina) push('bad', 'Escolha o(s) medicamento(s).');
+      if (p.criterioErro && (p.iache || p.memantina)) push('bad', p.criterioErro);
+      if (p.anosEstudo === '') push('bad', 'Informe os anos de estudo (define a faixa do MEEM e o item 1.2 do relatório).');
+      if (p.meem === '') push('bad', 'Informe o escore do MEEM.');
+      if (!p.meemData) push('bad', 'Informe a data do MEEM.');
+      if (!p.cdrData) push('bad', 'Informe a data do CDR.');
+      if (p.criterio && p.meem !== '' && p.escol) {
+        const [lo, hi] = RANGES[p.criterio][p.escol]; const m = +p.meem;
+        if (m < lo || m > hi) push('bad', `MEEM ${m} fora da faixa do PCDT para "${RANGES[p.criterio].nome}" com ${p.escol === 'gt4' ? '> 4' : '≤ 4'} anos de estudo (${lo}–${hi}).`);
+        else push('ok', `MEEM ${m} e CDR ${p.cdr} compatíveis com: ${RANGES[p.criterio].nome}.`);
+      }
+      if (!p.niaaa) push('bad', 'O PCDT exige diagnóstico de DA provável pelos critérios NIA-AA/ABN.');
+      if (!p.declaraExcl && d.tipo !== 'renovacao') push('warn', 'Declaração de ausência de critérios de exclusão não marcada no relatório.');
+      if (d.paciente.idade != null && d.paciente.idade < 40) push('bad', `Paciente com ${d.paciente.idade} anos: idade mínima de 40 anos para os medicamentos do PCDT de DA.`);
+      if (!d.paciente.nasc) push('warn', 'Informe a data de nascimento (vai no relatório e confere a idade mínima de 40 anos).');
+      if (p.memantina && p.clcr !== '') {
+        const c = +p.clcr;
+        if (c < 5) push('bad', `ClCr ${c} mL/min < 5: critério de exclusão da memantina.`);
+        else if (c < 30 && p.memEsq && p.memEsq.dose20) push('warn', `ClCr ${c} mL/min: bula recomenda dose máxima de memantina de 10 mg/dia (escolha o esquema de 10 mg/dia).`);
+      }
+      if (p.memantina && p.clcr === '' && d.tipo !== 'renovacao') push('warn', 'Memantina: informe o ClCr/TFG (exame obrigatório e critério de exclusão se < 5).');
+      push('info', 'Lista C1: receita de controle especial em 2 vias, validade de 30 dias — a 1ª retirada precisa ocorrer nesse prazo. A LME justifica a quantidade para 6 meses (Nota Técnica SESA-PR nº 01/2026).');
+      if (d.tipo !== 'renovacao') push('info', 'Aplicar o MEEM e o CDR nos formulários oficiais que saem no pacote (o cabeçalho e o escore já vêm preenchidos; marque os itens).');
+    },
+    anamnese(d) {
+      const p = d.prot; const s = [];
+      s.push(`Demência devida à doença de Alzheimer provável (critérios NIA-AA/ABN), CID ${d.cid}.`);
+      if (p.anosEstudo !== '') s.push(`Escolaridade: ${p.anosEstudo} anos.`);
+      if (p.meem !== '') s.push(`MEEM${p.meemData ? ' (' + fmt(p.meemData) + ')' : ''}: ${p.meem}/30.`);
+      if (p.cdr) s.push(`CDR${p.cdrData ? ' (' + fmt(p.cdrData) + ')' : ''}: ${p.cdr}${{ '1': ' (demência leve)', '2': ' (demência moderada)', '3': ' (demência grave)' }[p.cdr] || ''}.`);
+      if (p.memantina && p.clcr !== '') s.push(`ClCr/TFG: ${p.clcr} mL/min.`);
+      if (d.tratPrevioTexto) s.push(`Tratamentos prévios: ${d.tratPrevioTexto}.`);
+      s.push('Sem critérios de exclusão do PCDT.');
+      const r = [p.iacheEsq && p.iacheEsq.resumo, p.memEsq && p.memEsq.resumo].filter(Boolean).join(' + ');
+      if (r) s.push(`Solicito ${r}, conforme PCDT DA (Portaria Conjunta nº 27/2025).`);
+      return s.join(' ');
+    },
+    receita(d) {
+      const lines = this.meds(d.prot);
+      if (!lines.length) return 'Escolha o(s) medicamento(s) no passo 3.';
+      return receitaBase(d, lines, 'RECEITUÁRIO DE CONTROLE ESPECIAL — 1ª via: farmácia · 2ª via: paciente\nUSO ORAL' + (lines.some((l) => /adesivo/.test(l.lmeOption)) ? ' / TRANSDÉRMICO' : ''),
+        ['Tratamento para 6 (seis) meses, uso contínuo, conforme LME (Nota Técnica SESA-PR nº 01/2026).']);
+    },
+    infos: [
+      'Critérios (relatório SESA-PR 06/2026): leve CDR 1 e moderada CDR 2 → IAChE com MEEM 12–24 (> 4 anos de estudo) ou 8–21 (≤ 4); moderada com memantina + IAChE → MEEM 12–19 ou 8–15; grave CDR 3 → memantina e/ou donepezila com MEEM 5–11 ou 3–7.',
+      'Todos estes medicamentos são Lista C1: receita de controle especial em 2 vias, validade 30 dias, até 3 substâncias C1 por receita.',
+      'Idade mínima de 40 anos para os medicamentos do PCDT.',
+      'Renovação: MEEM e CDR com até 6 meses, LME e receita.',
+      'Memantina: exige ClCr ou creatinina com TFG; ClCr < 5 mL/min é exclusão; ClCr 5–29 → dose máxima 10 mg/dia (bula).',
+      'Rivastigmina: ao trocar cápsula por adesivo, o PCDT/bula orienta iniciar com o adesivo de 9 mg (4,6 mg/24 h).',
+    ],
+  };
+
+
+  // =====================================================================
+  // DOENÇA DE PARKINSON (G20)
+  // =====================================================================
+  const DOC_URL = (u) => `https://www.documentador.pr.gov.br/documentador/pub.do?action=d&uuid=@gtf-escriba-sesa@${u}`;
+  const TER_DP_URL = DOC_URL('25476eee-2a9c-4756-93f7-36dbad6cfb5c');
+  const REL_DDP_URL = DOC_URL('2ab3100e-e559-4e81-8cf6-7213d81a6e53');
+  Object.assign(P, {
+    pp0125: C('Pramipexol 0,125 mg (comprimido)', 'comprimidos'), pp025: C('Pramipexol 0,25 mg (comprimido)', 'comprimidos'), pp1: C('Pramipexol 1 mg (comprimido)', 'comprimidos'),
+    ras1: C('Rasagilina 1 mg (comprimido)', 'comprimidos'), ama100: C('Amantadina 100 mg (comprimido)', 'comprimidos'),
+    ent200: C('Entacapona 200 mg (comprimido)', 'comprimidos'), tri5: C('Triexifenidil 5 mg (comprimido)', 'comprimidos'),
+    cz25: C('Clozapina 25 mg (comprimido)', 'comprimidos'), cz100: C('Clozapina 100 mg (comprimido)', 'comprimidos'),
+  });
+  const rep = (n) => [n, n, n, n, n, n];
+  const ESQ_DP = {
+    pramipexol: [
+      { id: 'ptit', label: 'Titulação: 0,125 mg 8/8h (sem. 1) → 0,25 mg 8/8h (sem. 2) → 0,5 mg 8/8h', resumo: 'pramipexol em titulação semanal até 0,5 mg 8/8h (1,5 mg/dia)', lines: [
+        L('pp0125', [21, 0, 0, 0, 0, 0], 'Pramipexol 0,125 mg, comprimido', 'Tomar 1 comprimido por via oral de 8/8 horas na 1ª semana.'),
+        L('pp025', [117, 180, 180, 180, 180, 180], 'Pramipexol 0,25 mg, comprimido', 'Na 2ª semana, tomar 1 comprimido de 8/8 horas; a partir da 3ª semana, tomar 2 comprimidos\n   (0,5 mg) por via oral de 8/8 horas. Uso contínuo.')] },
+      { id: 'p025', label: '0,25 mg 8/8h (0,75 mg/dia)', resumo: 'pramipexol 0,25 mg 8/8h', lines: [L('pp025', rep(90), 'Pramipexol 0,25 mg, comprimido', 'Tomar 1 comprimido por via oral de 8/8 horas. Uso contínuo.')] },
+      { id: 'p05', label: '0,5 mg 8/8h (1,5 mg/dia) — 2 cp de 0,25 mg', resumo: 'pramipexol 0,5 mg 8/8h', lines: [L('pp025', rep(180), 'Pramipexol 0,25 mg, comprimido', 'Tomar 2 comprimidos (0,5 mg) por via oral de 8/8 horas. Uso contínuo.')] },
+      { id: 'p1', label: '1 mg 8/8h (3 mg/dia)', resumo: 'pramipexol 1 mg 8/8h', lines: [L('pp1', rep(90), 'Pramipexol 1 mg, comprimido', 'Tomar 1 comprimido por via oral de 8/8 horas. Uso contínuo.')] },
+      { id: 'p15', label: '1,5 mg 8/8h (4,5 mg/dia — dose máxima)', resumo: 'pramipexol 1,5 mg 8/8h', lines: [
+        L('pp1', rep(90), 'Pramipexol 1 mg, comprimido', 'Tomar 1 comprimido de 1 mg + 2 comprimidos de 0,25 mg (total 1,5 mg) por via oral de 8/8 horas.'),
+        L('pp025', rep(180), 'Pramipexol 0,25 mg, comprimido', 'Tomar 2 comprimidos junto com o comprimido de 1 mg, de 8/8 horas. Uso contínuo.')] },
+    ],
+    rasagilina: [
+      { id: 'r1', label: '1 mg 1x/dia', resumo: 'rasagilina 1 mg/dia', lines: [L('ras1', rep(30), 'Rasagilina 1 mg, comprimido', 'Tomar 1 comprimido por via oral 1 vez ao dia, pela manhã. Uso contínuo.')] },
+    ],
+    amantadina: [
+      { id: 'a2', label: '100 mg 12/12h (200 mg/dia)', resumo: 'amantadina 100 mg 12/12h', lines: [L('ama100', rep(60), 'Amantadina 100 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas (última dose até o meio da tarde). Uso contínuo.')] },
+      { id: 'a1', label: '100 mg 1x/dia', resumo: 'amantadina 100 mg/dia', lines: [L('ama100', rep(30), 'Amantadina 100 mg, comprimido', 'Tomar 1 comprimido por via oral pela manhã. Uso contínuo.')] },
+      { id: 'a3', label: '100 mg 8/8h (300 mg/dia)', resumo: 'amantadina 100 mg 8/8h', lines: [L('ama100', rep(90), 'Amantadina 100 mg, comprimido', 'Tomar 1 comprimido por via oral de 8/8 horas. Uso contínuo.')] },
+      { id: 'a4', label: '200 mg 12/12h (400 mg/dia — casos selecionados)', resumo: 'amantadina 200 mg 12/12h', lines: [L('ama100', rep(120), 'Amantadina 100 mg, comprimido', 'Tomar 2 comprimidos por via oral de 12/12 horas. Uso contínuo.')] },
+    ],
+    entacapona: [3, 4, 5, 6, 8].map((n) => ({ id: 'e' + n, label: `200 mg com cada dose de levodopa — ${n}x/dia`, resumo: `entacapona 200 mg com cada dose de levodopa (${n}x/dia)`,
+      lines: [L('ent200', rep(30 * n), 'Entacapona 200 mg, comprimido', `Tomar 1 comprimido por via oral junto com cada dose de levodopa (${n} vezes ao dia). Uso contínuo.`)] })),
+    triexifenidil: [
+      { id: 't25', label: '2,5 mg 12/12h (½ cp)', resumo: 'triexifenidil 2,5 mg 12/12h', lines: [L('tri5', rep(30), 'Triexifenidil 5 mg, comprimido', 'Tomar ½ comprimido por via oral de 12/12 horas. Uso contínuo. Não suspender abruptamente.')] },
+      { id: 't5x2', label: '5 mg 12/12h', resumo: 'triexifenidil 5 mg 12/12h', lines: [L('tri5', rep(60), 'Triexifenidil 5 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo. Não suspender abruptamente.')] },
+      { id: 't5x3', label: '5 mg 8/8h (15 mg/dia — máximo)', resumo: 'triexifenidil 5 mg 8/8h', lines: [L('tri5', rep(90), 'Triexifenidil 5 mg, comprimido', 'Tomar 1 comprimido por via oral de 8/8 horas. Uso contínuo. Não suspender abruptamente.')] },
+    ],
+    clozapina: [
+      { id: 'ctit', label: 'Titulação: 12,5 mg à noite (sem. 1) → 25 mg à noite', resumo: 'clozapina 12,5 mg à noite por 1 semana e depois 25 mg à noite', lines: [
+        L('cz25', [25, 30, 30, 30, 30, 30], 'Clozapina 25 mg, comprimido', 'Tomar ½ comprimido por via oral à noite na 1ª semana; depois, 1 comprimido à noite. Uso contínuo.')] },
+      { id: 'c125', label: '12,5 mg à noite (½ cp de 25 mg)', resumo: 'clozapina 12,5 mg à noite', lines: [L('cz25', rep(15), 'Clozapina 25 mg, comprimido', 'Tomar ½ comprimido por via oral à noite. Uso contínuo.')] },
+      { id: 'c25', label: '25 mg à noite', resumo: 'clozapina 25 mg à noite', lines: [L('cz25', rep(30), 'Clozapina 25 mg, comprimido', 'Tomar 1 comprimido por via oral à noite. Uso contínuo.')] },
+      { id: 'c375', label: '37,5 mg à noite (1 e ½ cp de 25 mg)', resumo: 'clozapina 37,5 mg à noite', lines: [L('cz25', rep(45), 'Clozapina 25 mg, comprimido', 'Tomar 1 e ½ comprimido por via oral à noite. Uso contínuo.')] },
+      { id: 'c50', label: '50 mg/dia (2 cp de 25 mg à noite)', resumo: 'clozapina 50 mg/dia', lines: [L('cz25', rep(60), 'Clozapina 25 mg, comprimido', 'Tomar 2 comprimidos por via oral à noite. Uso contínuo.')] },
+      { id: 'c100', label: '100 mg/dia (máximo do PCDT)', resumo: 'clozapina 100 mg/dia', lines: [L('cz100', rep(30), 'Clozapina 100 mg, comprimido', 'Tomar 1 comprimido por via oral à noite. Uso contínuo.')] },
+    ],
+    rivastigmina: ESQ.rivastigmina,
+  };
+  const DP_MEDS = [
+    ['pramipexol', 'Pramipexol', 'agonista dopaminérgico'], ['rasagilina', 'Rasagilina', 'IMAO-B'], ['amantadina', 'Amantadina', 'discinesias / sintomas leves'],
+    ['entacapona', 'Entacapona', 'iCOMT — só com levodopa'], ['triexifenidil', 'Triexifenidil', 'anticolinérgico'],
+    ['clozapina', 'Clozapina', 'psicose na DP'], ['rivastigmina', 'Rivastigmina', 'demência na DP'],
+  ];
+  const C1_DP = ['pramipexol', 'rasagilina', 'entacapona', 'clozapina', 'rivastigmina'];
+  // Notas de corte do MEEM sugeridas para a população brasileira (Brucki et al., 2003)
+  const meemCorte = (anos) => anos === '' ? null : (+anos === 0 ? 20 : +anos <= 4 ? 25 : +anos <= 8 ? 26 : +anos <= 11 ? 28 : 29); // cortes do Relatório SESA-PR (Brucki 2003)
+
+  const DP = {
+    id: 'dp',
+    nome: 'Doença de Parkinson — pramipexol, rasagilina, amantadina, entacapona, triexifenidil, clozapina, rivastigmina',
+    cids: [{ cid: 'G20', diag: 'Doença de Parkinson' }],
+    protocolo: 'PCDT Doença de Parkinson — Portaria Conjunta SAES/SECTICS nº 16, de 01/08/2025',
+    consultadoEm: '2026-11-12',
+    pdfs: { meem: 'MEEM', rel: 'REL_DDP', ter: 'TER_DP' },
+    fill: { meem: 'fillMEEM', rel: 'fillRelDDP', ter: 'fillTerDP' },
+    labels: { meem: 'MEEM (cabeçalho e escore)', rel: 'Relatório de Demência na DP', ter: 'TER' },
+    medsHTML: `
+      <div class="grid">
+        ${DP_MEDS.map(([k, n, s]) => `
+        <div class="c5"><label class="opts"><input type="checkbox" id="dpm_${k}"> <b>${n}</b> <span class="small">— ${s}</span></label></div>
+        <div class="c7 hide" id="dpe_${k}Box"><select id="dpe_${k}">${esqOptions(ESQ_DP[k])}</select></div>
+        <div class="c7" id="dpe_${k}Fill"></div>`).join('')}
+        <div class="c12"><div class="muted-box" id="dpQtd"></div></div>
+        <div class="c12"><div class="small">Levodopa/carbidopa, levodopa/benserazida e biperideno não entram na LME: são do Componente Básico (farmácia da UBS).</div></div>
+      </div>`,
+    clinicoHTML: `
+      <div class="grid">
+        <div class="c12"><label class="opts"><input type="checkbox" id="dpMds" checked> DP pelos critérios da MDS (exigência do PCDT para tratamento medicamentoso):</label>
+          <select id="dpMdsTipo" style="max-width:260px;margin-top:4px"><option value="estabelecido">diagnóstico estabelecido</option><option value="provavel">diagnóstico provável</option></select></div>
+        <div class="c12"><label>Sinais motores</label><div class="opts">
+          <label><input type="checkbox" id="dpBrad" checked> Bradicinesia</label>
+          <label><input type="checkbox" id="dpTrem"> Tremor de repouso</label>
+          <label><input type="checkbox" id="dpRig"> Rigidez</label>
+          <label><input type="checkbox" id="dpAssim"> Início assimétrico</label></div></div>
+        <div class="c3"><label>Início dos sintomas (ano)</label><input type="text" id="dpInicio" placeholder="ex.: 2019"></div>
+        <div class="c3"><label>Lado de início</label><select id="dpLado"><option value="">—</option><option>direito</option><option>esquerdo</option><option>bilateral</option></select></div>
+        <div class="c3"><label>Hoehn &amp; Yahr</label><select id="dpHY"><option value="">—</option><option>1</option><option>1,5</option><option>2</option><option>2,5</option><option>3</option><option>4</option><option>5</option></select></div>
+        <div class="c3"></div>
+        <div class="c4"><label class="opts"><input type="checkbox" id="dpLevo"> Em uso de levodopa</label></div>
+        <div class="c8 hide" id="dpLevoBox"><input type="text" id="dpLevoDose" placeholder="ex.: levodopa/benserazida 200/50 mg 1 cp 6/6h"></div>
+        <div class="c12"><label>Complicações / sintomas que justificam a escolha</label><div class="opts">
+          <label><input type="checkbox" id="dpFlut"> Flutuações motoras (wearing-off)</label>
+          <label><input type="checkbox" id="dpDisc"> Discinesias</label>
+          <label><input type="checkbox" id="dpPsic"> Sintomas psicóticos persistentes ou graves</label>
+          <label><input type="checkbox" id="dpDem"> Demência</label></div></div>
+        <div class="c12 hide" id="dpDemBox"><div class="grid">
+          <div class="c12"><label>Critérios de demência associada à DP (PCDT 2025)</label><div class="opts">
+            <label><input type="checkbox" id="dpDem1"> DP iniciada ≥ 1 ano antes da demência</label>
+            <label><input type="checkbox" id="dpAvd"> Comprometimento das atividades de vida diária</label>
+            <label><input type="checkbox" id="dpSemDep"> Sem depressão maior, delirium ou outra causa para o déficit cognitivo</label>
+            <label><input type="checkbox" id="dpDeclCI" checked> Declaro ausência de contraindicações absolutas (último item do relatório)</label></div></div>
+          <div class="c3"><label>Anos completos de estudo <span class="req">*</span></label><input type="number" id="dpAnos" min="0" max="30"></div>
+          <div class="c3"><label>MEEM (0–30) <span class="req">*</span></label><input type="number" id="dpMeem" min="0" max="30"></div>
+          <div class="c3"><label>Data do MEEM <span class="req">*</span></label><input type="date" id="dpMeemData"></div>
+        </div></div>
+        <div class="c12 hide" id="dpHemoBox"><label>Hemograma (clozapina — opcional, para checar os limites do PCDT)</label>
+          <div class="lab"><div><label>Leucócitos (/mm³)</label><input type="number" id="dpLeuc" min="0"></div><div><label>Neutrófilos (/mm³)</label><input type="number" id="dpNeut" min="0"></div></div></div>
+      </div>`,
+    clearIds: ['dpInicio', 'dpLevoDose', 'dpAnos', 'dpMeem', 'dpMeemData', 'dpLeuc', 'dpNeut'],
+    clearSelects: ['dpLado', 'dpHY', 'dpMdsTipo'],
+    read() {
+      const sel = DP_MEDS.map(([k]) => k).filter((k) => chk('dpm_' + k));
+      const esq = {}; sel.forEach((k) => { esq[k] = ESQ_DP[k].find((e) => e.id === v('dpe_' + k)) || ESQ_DP[k][0]; });
+      const anos = v('dpAnos'), meem = v('dpMeem'), corte = meemCorte(anos);
+      return {
+        meemAnormal: corte != null && meem !== '' && +meem < corte,
+        medsSel: sel, esq, mds: chk('dpMds'), mdsTipo: v('dpMdsTipo'), declaraCI: chk('dpDeclCI'), brad: chk('dpBrad'), trem: chk('dpTrem'), rig: chk('dpRig'), assim: chk('dpAssim'),
+        inicio: v('dpInicio'), lado: v('dpLado'), hy: v('dpHY'), levo: chk('dpLevo'), levoDose: v('dpLevoDose'),
+        flut: chk('dpFlut'), disc: chk('dpDisc'), psic: chk('dpPsic'), dem: chk('dpDem'),
+        dem1: chk('dpDem1'), avd: chk('dpAvd'), semDep: chk('dpSemDep'),
+        anosEstudo: v('dpAnos'), meem: v('dpMeem'), meemData: v('dpMeemData'), leuc: v('dpLeuc'), neut: v('dpNeut'),
+      };
+    },
+    ui(p) {
+      DP_MEDS.forEach(([k]) => { const on = p.medsSel.includes(k); $('dpe_' + k + 'Box').classList.toggle('hide', !on); $('dpe_' + k + 'Fill').classList.toggle('hide', on); });
+      $('dpLevoBox').classList.toggle('hide', !p.levo);
+      $('dpDemBox').classList.toggle('hide', !(p.dem || p.medsSel.includes('rivastigmina')));
+      $('dpHemoBox').classList.toggle('hide', !p.medsSel.includes('clozapina'));
+      const lines = this.meds(p);
+      $('dpQtd').innerHTML = lines.length ? '<b>Quantidades na LME (mês 1 → 6):</b><br>' + lines.map((l) => `${l.lmeOption}: ${l.qtd.join(' · ')}`).join('<br>') : 'Marque o(s) medicamento(s).';
+    },
+    meds(p) {
+      // junta linhas do mesmo item da LME (ex.: pramipexol 0,25 mg em dois esquemas)
+      const out = [];
+      p.medsSel.forEach((k) => p.esq[k].lines.forEach((l) => {
+        const ex = out.find((o) => o.lmeOption === l.lmeOption);
+        if (ex) ex.qtd = ex.qtd.map((q, i) => q + l.qtd[i]); else out.push(Object.assign({}, l, { qtd: l.qtd.slice(), med: k }));
+      }));
+      return out;
+    },
+    docs(tipo, p) {
+      const sel = (p && p.medsSel) || [];
+      const riva = sel.includes('rivastigmina'), cloz = sel.includes('clozapina'), outros = sel.some((k) => k !== 'rivastigmina');
+      const presc = { id: 'presc', nome: 'Prescrição médica (controle especial em 2 vias para os itens da Lista C1)', validade: 0, validadeTxt: '30 dias', gerado: 'receita' };
+      const lme = { id: 'lme', nome: 'LME adequadamente preenchida', validade: 3, gerado: 'lme' };
+      const relat = { id: 'relat', nome: tipo === 'adequacao' ? 'Relatório da evolução justificando a alteração de dose/medicamento (vai na anamnese da LME)' : 'Relatório com os sinais e sintomas que levaram ao diagnóstico (vai na anamnese da LME)', validade: 3, gerado: 'lme' };
+      const ter = { id: 'ter', nome: 'Termo de Esclarecimento e Responsabilidade (TER) do PCDT de Doença de Parkinson', validade: 3, gerado: 'ter' };
+      const relDdp = { id: 'relddp', nome: 'Relatório Médico Específico para Demência na Doença de Parkinson (SESA-PR)', validade: 3, gerado: 'rel' };
+      const meem = { id: 'meem', nome: 'Miniexame do Estado Mental (MEEM) — formulário oficial', validade: 6, exame: true, dateField: 'dpMeemData', fieldLabel: 'data do MEEM (passo 4)' };
+      const hemo = { id: 'hemo', nome: 'Hemograma (clozapina)', validade: 6, exame: true, lab: true };
+      const L2 = [presc, lme];
+      if (tipo === 'inicial') { if (outros) L2.push(relat); if (riva) L2.push(relDdp, meem); L2.push(ter); }
+      else if (tipo === 'adequacao') { L2.push(relat); }
+      else if (outros) L2.push(relat);
+      if (cloz) L2.push(hemo);
+      return L2;
+    },
+    outputs(tipo, p) { if (tipo !== 'inicial') return ['lme']; return ['lme', ...(p && p.medsSel.includes('rivastigmina') ? ['rel', 'meem'] : []), 'ter']; },
+    alerts(d, push, num) {
+      const p = d.prot, s = p.medsSel, has = (k) => s.includes(k);
+      if (!s.length) { push('bad', 'Marque o(s) medicamento(s).'); return; }
+      if (!p.mds) push('bad', 'O PCDT exige diagnóstico de DP clinicamente provável ou estabelecida (critérios MDS) para o tratamento medicamentoso.');
+      if (!p.brad) push('warn', 'Critérios MDS: parkinsonismo = bradicinesia + tremor de repouso e/ou rigidez. Bradicinesia não marcada.');
+      else if (!p.trem && !p.rig) push('warn', 'Critérios MDS: além da bradicinesia, marque tremor de repouso e/ou rigidez.');
+      if (has('entacapona') && !p.levo) push('bad', 'Entacapona só é usada associada à levodopa: marque "em uso de levodopa" e informe a dose.');
+      if (has('entacapona') && !p.flut) push('warn', 'Entacapona: indicação é flutuação motora (wearing-off) em uso de levodopa — registre na anamnese.');
+      if (has('entacapona') && p.levo && p.esq.entacapona && !p.levoDose) push('warn', 'Informe o esquema de levodopa: o nº de comprimidos de entacapona deve bater com o nº de doses de levodopa.');
+      if (has('clozapina') && !p.psic) push('bad', 'Clozapina no PCDT de DP é para sintomas psicóticos persistentes ou graves: marque e descreva.');
+      if (has('clozapina')) {
+        const le = num('dpLeuc'), ne = num('dpNeut');
+        if (!isNaN(le) && le < 3500 && d.tipo === 'inicial') push('bad', `Leucócitos ${le}/mm³ < 3.500: contraindicação ao início da clozapina (PCDT, seção 7).`);
+        if (!isNaN(le) && le < 3000) push('bad', `Leucócitos ${le}/mm³ < 3.000: critério de interrupção da clozapina.`);
+        if (!isNaN(ne) && ne < 1500) push('bad', `Neutrófilos ${ne}/mm³ < 1.500: critério de interrupção da clozapina.`);
+        push('info', 'Clozapina: hemograma semanal nas primeiras 18 semanas e mensal depois (PCDT). A Farmácia do Paraná exige hemograma com até 6 meses.');
+      }
+      if (has('rivastigmina')) {
+        if (!p.dem1 || !p.avd || !p.semDep) push('bad', 'Rivastigmina (demência na DP): marque os critérios — DP ≥ 1 ano antes da demência, comprometimento de AVD e ausência de depressão maior/delirium/outra causa.');
+        if (d.tipo === 'inicial') {
+          if (p.anosEstudo === '') push('bad', 'Informe os anos de estudo (cabeçalho do MEEM e nota de corte).');
+          if (p.meem === '') push('bad', 'Informe o escore do MEEM.');
+          if (!p.meemData) push('bad', 'Informe a data do MEEM.');
+          const c = meemCorte(p.anosEstudo);
+          if (c != null && p.meem !== '') { if (+p.meem >= c) push('warn', `MEEM ${p.meem} não está abaixo da nota de corte do relatório SESA-PR para ${p.anosEstudo} anos de estudo (< ${c}). O critério "escore anormal no MEEM" ficará desmarcado.`); else push('ok', `MEEM ${p.meem} abaixo da nota de corte para a escolaridade (< ${c}).`); }
+          if (!p.declaraCI) push('warn', 'Declaração de ausência de contraindicações não marcada no relatório de demência na DP.');
+          if (!d.paciente.nasc) push('warn', 'Informe a data de nascimento (vai no relatório de demência na DP).');
+          push('info', 'Aplicar o MEEM no formulário oficial que sai no pacote (cabeçalho e escore já preenchidos).');
+        }
+        if (d.paciente.idade != null && d.paciente.idade < 18) push('bad', 'Rivastigmina: idade mínima de 18 anos.');
+      }
+      if (has('triexifenidil')) {
+        push('warn', 'Triexifenidil é Lista B1: exige Notificação de Receita B (azul) à parte, validade 30 dias, até 60 dias de tratamento. Ele não sai na receita gerada aqui.');
+        if (d.paciente.idade != null && d.paciente.idade >= 65) push('warn', `Paciente com ${d.paciente.idade} anos: anticolinérgicos pioram cognição e causam confusão em idosos — reavalie a indicação.`);
+        if (has('rivastigmina') || p.dem) push('warn', 'Triexifenidil (anticolinérgico) com demência/rivastigmina: efeitos opostos e piora cognitiva.');
+      }
+      if (has('rasagilina')) push('info', 'Rasagilina: não associar a fluoxetina nem fluvoxamina (PCDT).');
+      if (has('pramipexol')) push('info', 'Pramipexol: orientar sobre transtorno do controle de impulsos, sonolência excessiva e alucinações.');
+      if (has('amantadina')) push('info', 'Amantadina: ajustar à função renal; retirada gradual em 1–2 semanas.');
+      if (s.some((k) => C1_DP.includes(k))) push('info', 'Itens da Lista C1: receita de controle especial em 2 vias, validade de 30 dias — a 1ª retirada precisa ocorrer nesse prazo. A LME justifica a quantidade para 6 meses (Nota Técnica SESA-PR nº 01/2026).');
+      if (d.tipo === 'inicial') push('info', 'TER: o paciente marca Sim/Não na autorização de uso dos dados e assina.');
+    },
+    anamnese(d) {
+      const p = d.prot; const s = [];
+      const sinais = [p.brad && 'bradicinesia', p.trem && 'tremor de repouso', p.rig && 'rigidez'].filter(Boolean);
+      s.push(`Doença de Parkinson ${p.mds ? (p.mdsTipo === 'provavel' ? 'clinicamente provável' : 'clinicamente estabelecida') + ' (critérios MDS)' : ''}, CID G20.`.replace(' ,', ','));
+      if (sinais.length) s.push(`Quadro de ${sinais.join(', ').replace(/, ([^,]*)$/, ' e $1')}${p.assim || p.lado ? `, de início assimétrico${p.lado && p.lado !== 'bilateral' ? ' à ' + p.lado.replace('direito', 'direita').replace('esquerdo', 'esquerda') : ''}` : ''}${p.inicio ? `, com início em ${p.inicio}` : ''}.`);
+      if (p.hy) s.push(`Hoehn & Yahr ${p.hy}.`);
+      if (p.levo) s.push(`Em uso de ${p.levoDose || 'levodopa'}.`);
+      const comp = [p.flut && 'flutuações motoras (wearing-off)', p.disc && 'discinesias', p.psic && 'sintomas psicóticos persistentes', p.dem && 'declínio cognitivo com comprometimento das AVD'].filter(Boolean);
+      if (comp.length) s.push(`Apresenta ${comp.join(', ').replace(/, ([^,]*)$/, ' e $1')}.`);
+      if (p.medsSel.includes('rivastigmina')) {
+        if (p.dem1) s.push('Demência iniciada mais de 1 ano após o início da DP, sem depressão maior, delirium ou outra causa.');
+        if (p.meem !== '') s.push(`MEEM${p.meemData ? ' (' + fmt(p.meemData) + ')' : ''}: ${p.meem}/30${p.anosEstudo !== '' ? `, ${p.anosEstudo} anos de estudo` : ''}.`);
+      }
+      if (d.tratPrevioTexto) s.push(`Tratamentos prévios: ${d.tratPrevioTexto}.`);
+      const r = p.medsSel.map((k) => p.esq[k].resumo).join(' + ');
+      if (r) s.push(`Solicito ${r}, conforme PCDT DP (Portaria Conjunta nº 16/2025).`);
+      return s.join(' ');
+    },
+    receita(d) {
+      const p = d.prot;
+      const all = this.meds(p);
+      if (!all.length) return 'Marque o(s) medicamento(s) no passo 3.';
+      const lines = all.filter((l) => l.med !== 'triexifenidil');
+      const tri = all.some((l) => l.med === 'triexifenidil');
+      const extra = ['Tratamento para 6 (seis) meses, uso contínuo, conforme LME (Nota Técnica SESA-PR nº 01/2026).'];
+      if (tri) extra.push('Triexifenidil: prescrever em Notificação de Receita B (azul) separada.');
+      if (!lines.length) return 'Triexifenidil é Lista B1: prescrever em Notificação de Receita B (azul), que não é gerada aqui.';
+      const c1 = lines.some((l) => C1_DP.includes(l.med));
+      return receitaBase(d, lines, (c1 ? 'RECEITUÁRIO DE CONTROLE ESPECIAL — 1ª via: farmácia · 2ª via: paciente\n' : '') + 'USO ORAL' + (lines.some((l) => /adesivo/.test(l.lmeOption)) ? ' / TRANSDÉRMICO' : ''), extra);
+    },
+    infos: [
+      'Exigências da Farmácia do Paraná (consulta de 12/11/2026): todos os itens pedem LME, prescrição e relatório com os sinais e sintomas (pode ir na anamnese da LME); na solicitação inicial, também o TER do PCDT de DP.',
+      'Clozapina: + hemograma (validade 6 meses) na inicial, adequação e renovação.',
+      'Rivastigmina (demência na DP): inicial exige MEEM (6 meses), Relatório Médico Específico para Demência na DP e TER — os três saem no pacote; renovação só LME e prescrição.',
+      'Renovação dos demais: LME, prescrição e relatório (anamnese da LME).',
+      'PCDT 2025: pramipexol até 4,5 mg/dia; amantadina até 200 mg/dia (400 mg em casos selecionados); entacapona 200 mg por dose de levodopa (máx. 2 g/dia); triexifenidil até 15 mg/dia; clozapina 12,5–100 mg/dia (média 25–37,5 mg).',
+      'Selegilina, tolcapona e bromocriptina saíram do PCDT de 2025 e não aparecem na Farmácia do Paraná para G20.',
+      'Levodopa/carbidopa, levodopa/benserazida e biperideno: Componente Básico (UBS), fora da LME.',
+    ],
+  };
+
+  // =====================================================================
+  // EPILEPSIA — padronizado no CID G40.0 (apresentações da Farmácia do Paraná para G40.0)
+  // =====================================================================
+  const TER_EPI_URL = DOC_URL('64d9ae2e-ea27-48e6-a7e7-0cb848fbf0bc');
+  Object.assign(P, {
+    clb10: C('Clobazam 10 mg (comprimido)', 'comprimidos'),
+    eto: C('Etossuximida 50 mg/mL (frasco de 120mL)', 'frascos de 120 mL'),
+    gb300: C('Gabapentina 300 mg (cápsula)', 'cápsulas'), gb400: C('Gabapentina 400 mg (cápsula)', 'cápsulas'),
+    lt25: C('Lamotrigina 25 mg (comprimido)', 'comprimidos'), lt100: C('Lamotrigina 100 mg (comprimido)', 'comprimidos'),
+    lv250: C('Levetiracetam 250 mg (comprimido)', 'comprimidos'), lv500: C('Levetiracetam 500 mg (comprimido)', 'comprimidos'),
+    lv750: C('Levetiracetam 750 mg (comprimido)', 'comprimidos'), lv1000: C('Levetiracetam 1000 mg (comprimido)', 'comprimidos'),
+    lvs150: C('Levetiracetam 100 mg/ml solução oral (por frasco de 150 mL)', 'frascos de 150 mL'),
+    pri250: C('Primidona 250 mg (comprimido)', 'comprimidos'),
+    tp25: C('Topiramato 25 mg (comprimido)', 'comprimidos'), tp50: C('Topiramato 50 mg (comprimido)', 'comprimidos'), tp100: C('Topiramato 100 mg (comprimido)', 'comprimidos'),
+    vgb500: C('Vigabatrina 500 mg (comprimido)', 'comprimidos'),
+  });
+  // soma, por mês de 30 dias (6 meses), o nº de unidades/dia devolvido por fnDia(d) → { chave: unidades }
+  function contar(fnDia) {
+    const tot = {};
+    for (let m = 0; m < 6; m++) for (let d = m * 30; d < m * 30 + 30; d++) {
+      const c = fnDia(d); Object.keys(c).forEach((k) => { if (!c[k]) return; (tot[k] = tot[k] || [0, 0, 0, 0, 0, 0])[m] += c[k]; });
+    }
+    Object.keys(tot).forEach((k) => { tot[k] = tot[k].map((x) => Math.ceil(x - 1e-9)); });
+    return tot;
+  }
+  // Lamotrigina: só 25 mg e 100 mg na Regional de Londrina (não existe 50 mg).
+  // Titulação padronizada: +25 mg a cada 2 semanas até 200 mg/dia; acima de 200 mg/dia, +50 mg por semana.
+  const lamoDia = (d, alvo) => { const s = Math.floor(d / 7); return s >= 14 ? Math.min(alvo, 200 + 50 * (s - 14)) : Math.min(alvo, 25 * (Math.floor(s / 2) + 1)); };
+  function ltSplit(mg) { // [manhã, noite] usando o máximo de cp de 100 mg
+    if (mg <= 25) return [0, mg];
+    const n100 = Math.floor(mg / 100); let n25 = (mg % 100) / 25;
+    let noite = Math.ceil(n100 / 2) * 100, manha = Math.floor(n100 / 2) * 100;
+    while (n25-- > 0) { if (noite <= manha) noite += 25; else manha += 25; }
+    return [manha, noite];
+  }
+  const ltCp = (mg) => [Math.floor(mg / 100) && `${Math.floor(mg / 100)} cp de 100 mg`, (mg % 100) && `${(mg % 100) / 25} cp de 25 mg`].filter(Boolean).join(' + ');
+  const ltTxt = (mg) => { const [m, n] = ltSplit(mg); return m ? `${ltCp(m)} pela manhã e ${ltCp(n)} à noite` : `${ltCp(n)} à noite`; };
+  const ltConta = (mg) => { const [m, n] = ltSplit(mg); return { lt25: (m % 100) / 25 + (n % 100) / 25, lt100: Math.floor(m / 100) + Math.floor(n / 100) }; };
+  function ltLines(tot, pos25, pos100) {
+    const out = [];
+    if (tot.lt25) out.push(L('lt25', tot.lt25, 'Lamotrigina 25 mg, comprimido', pos25));
+    if (tot.lt100) out.push(L('lt100', tot.lt100, 'Lamotrigina 100 mg, comprimido', pos100));
+    return out;
+  }
+  function ltTitulacao(alvo) {
+    const passos = []; // [dose, semana inicial (1-based)]
+    for (let s = 0; ; s++) { const mg = lamoDia(s * 7, alvo); if (!passos.length || passos[passos.length - 1][0] !== mg) passos.push([mg, s + 1]); if (mg >= alvo) break; }
+    const txt = passos.map(([mg, ini], i) => {
+      const fim = i < passos.length - 1 ? passos[i + 1][1] - 1 : null;
+      const per = fim == null ? `A partir da ${ini}ª semana` : (fim === ini ? `${ini}ª semana` : `Semanas ${ini} e ${fim}`.replace(/Semanas (\d+) e (\d+)/, (x, a, b) => (+b - +a > 1 ? `Semanas ${a} a ${b}` : x)));
+      return `${per}: ${mg} mg/dia — ${ltTxt(mg)}${fim == null ? '. Uso contínuo.' : ';'}`;
+    });
+    const sem100 = (passos.find(([mg]) => mg >= 100) || [0, 0])[1];
+    const tot = contar((d) => ltConta(lamoDia(d, alvo)));
+    const pos = 'Titulação lenta (via oral):\n   ' + txt.join('\n   ');
+    return { lines: ltLines(tot, pos, `Usar conforme o esquema de titulação do item acima (a partir da ${sem100}ª semana).`), semAlvo: passos[passos.length - 1][1] };
+  }
+  function ltManut(mg) {
+    const tot = contar(() => ltConta(mg)); const pos = `Tomar ${ltTxt(mg)}, por via oral (${mg} mg/dia). Uso contínuo.`;
+    const both = tot.lt25 && tot.lt100;
+    return ltLines(tot, pos, both ? 'Tomar junto com os comprimidos de 25 mg, conforme o item acima. Uso contínuo.' : pos);
+  }
+  const tit = (alvo) => { const t = ltTitulacao(alvo); return { id: 'tit' + alvo, label: `Titulação lenta até ${alvo} mg/dia (+25 mg a cada 2 semanas${alvo > 200 ? ' até 200; depois +50 mg/semana' : ''}) — alvo na ${t.semAlvo}ª semana`, resumo: `lamotrigina em titulação lenta (25 mg a cada 2 semanas até 200 mg/dia${alvo > 200 ? `, depois 50 mg/semana até ${alvo} mg/dia` : ''})`, titLamo: true, lines: t.lines }; };
+  const lsol = (mg, ml) => ({ id: 'ls' + mg, label: `Solução oral 100 mg/mL (frasco de 150 mL) — ${mg} mg (${String(ml).replace('.', ',')} mL) 12/12h`, resumo: `levetiracetam solução oral ${mg} mg 12/12h`,
+    lines: [{ sol: true, mlMes: rep(ml * 2 * 30), nome: 'Levetiracetam 100 mg/mL, solução oral', pos: `Tomar ${String(ml).replace('.', ',')} mL (${mg} mg) por via oral de 12/12 horas. Uso contínuo.` }] });
+  const ESQ_EPI = {
+    lamotrigina: [tit(200), tit(300), tit(400), ...[100, 150, 200, 250, 300, 400].map((mg) => ({ id: 'm' + mg, label: `${mg} mg/dia (manutenção) — ${ltTxt(mg)}`, resumo: `lamotrigina ${mg} mg/dia`, lines: ltManut(mg) }))],
+    levetiracetam: [
+      { id: 'ltit', label: 'Titulação: 500 mg 12/12h por 2 semanas (2 cp de 250) → 1.000 mg 12/12h', resumo: 'levetiracetam 500 mg 12/12h por 2 semanas e depois 1.000 mg 12/12h', lines: [
+        L('lv250', [56, 0, 0, 0, 0, 0], 'Levetiracetam 250 mg, comprimido', 'Tomar 2 comprimidos (500 mg) por via oral de 12/12 horas nas 2 primeiras semanas.'),
+        L('lv1000', [32, 60, 60, 60, 60, 60], 'Levetiracetam 1000 mg, comprimido', 'A partir da 3ª semana, tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'l250', label: '250 mg 12/12h', resumo: 'levetiracetam 250 mg 12/12h', lines: [L('lv250', rep(60), 'Levetiracetam 250 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'l500b', label: '500 mg 12/12h — 2 cp de 250 mg', resumo: 'levetiracetam 500 mg 12/12h', lines: [L('lv250', rep(120), 'Levetiracetam 250 mg, comprimido', 'Tomar 2 comprimidos (500 mg) por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'l500', label: '500 mg 12/12h — cp de 500 mg (às vezes em falta na Regional)', resumo: 'levetiracetam 500 mg 12/12h', lv500: true, lines: [L('lv500', rep(60), 'Levetiracetam 500 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'l750', label: '750 mg 12/12h', resumo: 'levetiracetam 750 mg 12/12h', lines: [L('lv750', rep(60), 'Levetiracetam 750 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'l1000', label: '1.000 mg 12/12h', resumo: 'levetiracetam 1.000 mg 12/12h', lines: [L('lv1000', rep(60), 'Levetiracetam 1000 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'l1500', label: '1.500 mg 12/12h (3 g/dia) — 2 cp de 750 mg', resumo: 'levetiracetam 1.500 mg 12/12h', lines: [L('lv750', rep(120), 'Levetiracetam 750 mg, comprimido', 'Tomar 2 comprimidos (1.500 mg) por via oral de 12/12 horas. Uso contínuo.')] },
+      lsol(250, 2.5), lsol(500, 5), lsol(750, 7.5), lsol(1000, 10),
+    ],
+    topiramato: [
+      { id: 'ttit', label: 'Titulação semanal: 25 mg à noite → 25 mg 12/12h → 25+50 mg → 50 mg 12/12h', resumo: 'topiramato em titulação semanal até 50 mg 12/12h', lines: [
+        L('tp25', [28, 0, 0, 0, 0, 0], 'Topiramato 25 mg, comprimido', '1ª semana: 1 comprimido à noite; 2ª semana: 1 comprimido de 12/12 horas;\n   3ª semana: 1 comprimido pela manhã (junto com 1 cp de 50 mg à noite).'),
+        L('tp50', [25, 60, 60, 60, 60, 60], 'Topiramato 50 mg, comprimido', '3ª semana: 1 comprimido à noite; a partir da 4ª semana: 1 comprimido de 12/12 horas. Uso contínuo.')] },
+      { id: 't50', label: '50 mg 12/12h (100 mg/dia)', resumo: 'topiramato 50 mg 12/12h', lines: [L('tp50', rep(60), 'Topiramato 50 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 't100', label: '100 mg 12/12h (200 mg/dia)', resumo: 'topiramato 100 mg 12/12h', lines: [L('tp100', rep(60), 'Topiramato 100 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 't150', label: '150 mg 12/12h (300 mg/dia) — 100 + 50 mg', resumo: 'topiramato 150 mg 12/12h', lines: [
+        L('tp100', rep(60), 'Topiramato 100 mg, comprimido', 'Tomar 1 comprimido + 1 comprimido de 50 mg (total 150 mg) por via oral de 12/12 horas.'),
+        L('tp50', rep(60), 'Topiramato 50 mg, comprimido', 'Tomar 1 comprimido junto com o de 100 mg, de 12/12 horas. Uso contínuo.')] },
+      { id: 't200', label: '200 mg 12/12h (400 mg/dia — máximo)', resumo: 'topiramato 200 mg 12/12h', lines: [L('tp100', rep(120), 'Topiramato 100 mg, comprimido', 'Tomar 2 comprimidos por via oral de 12/12 horas. Uso contínuo.')] },
+    ],
+    gabapentina: [
+      { id: 'gtit', label: 'Titulação: 300 mg à noite (D1) → 300 mg 12/12h (D2) → 300 mg 8/8h', resumo: 'gabapentina em titulação até 300 mg 8/8h', lines: [L('gb300', [87, 90, 90, 90, 90, 90], 'Gabapentina 300 mg, cápsula', '1º dia: 1 cápsula à noite; 2º dia: 1 cápsula de 12/12 horas; a partir do 3º dia:\n   1 cápsula de 8/8 horas. Uso contínuo.')] },
+      { id: 'g300', label: '300 mg 8/8h (900 mg/dia)', resumo: 'gabapentina 300 mg 8/8h', lines: [L('gb300', rep(90), 'Gabapentina 300 mg, cápsula', 'Tomar 1 cápsula por via oral de 8/8 horas. Uso contínuo.')] },
+      { id: 'g400', label: '400 mg 8/8h (1.200 mg/dia)', resumo: 'gabapentina 400 mg 8/8h', lines: [L('gb400', rep(90), 'Gabapentina 400 mg, cápsula', 'Tomar 1 cápsula por via oral de 8/8 horas. Uso contínuo.')] },
+      { id: 'g600', label: '600 mg 8/8h (1.800 mg/dia) — 2 cáps de 300', resumo: 'gabapentina 600 mg 8/8h', lines: [L('gb300', rep(180), 'Gabapentina 300 mg, cápsula', 'Tomar 2 cápsulas por via oral de 8/8 horas. Uso contínuo.')] },
+      { id: 'g800', label: '800 mg 8/8h (2.400 mg/dia) — 2 cáps de 400', resumo: 'gabapentina 800 mg 8/8h', lines: [L('gb400', rep(180), 'Gabapentina 400 mg, cápsula', 'Tomar 2 cápsulas por via oral de 8/8 horas. Uso contínuo.')] },
+      { id: 'g1200', label: '1.200 mg 8/8h (3.600 mg/dia — máximo) — 3 cáps de 400', resumo: 'gabapentina 1.200 mg 8/8h', lines: [L('gb400', rep(270), 'Gabapentina 400 mg, cápsula', 'Tomar 3 cápsulas por via oral de 8/8 horas. Uso contínuo.')] },
+    ],
+    vigabatrina: [
+      { id: 'vtit', label: 'Titulação: 500 mg 12/12h (1 semana) → 1.000 mg 12/12h', resumo: 'vigabatrina 500 mg 12/12h por 1 semana e depois 1.000 mg 12/12h', lines: [L('vgb500', [106, 120, 120, 120, 120, 120], 'Vigabatrina 500 mg, comprimido', 'Tomar 1 comprimido de 12/12 horas na 1ª semana; depois, 2 comprimidos de 12/12 horas. Uso contínuo.')] },
+      { id: 'v500', label: '500 mg 12/12h', resumo: 'vigabatrina 500 mg 12/12h', lines: [L('vgb500', rep(60), 'Vigabatrina 500 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'v1000', label: '1.000 mg 12/12h (2 g/dia)', resumo: 'vigabatrina 1.000 mg 12/12h', lines: [L('vgb500', rep(120), 'Vigabatrina 500 mg, comprimido', 'Tomar 2 comprimidos por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'v1500', label: '1.500 mg 12/12h (3 g/dia — máximo)', resumo: 'vigabatrina 1.500 mg 12/12h', lines: [L('vgb500', rep(180), 'Vigabatrina 500 mg, comprimido', 'Tomar 3 comprimidos por via oral de 12/12 horas. Uso contínuo.')] },
+    ],
+    clobazam: [
+      { id: 'c5', label: '5 mg à noite (½ cp)', resumo: 'clobazam 5 mg à noite', lines: [L('clb10', rep(15), 'Clobazam 10 mg, comprimido', 'Tomar ½ comprimido por via oral à noite. Uso contínuo.')] },
+      { id: 'c10', label: '10 mg à noite', resumo: 'clobazam 10 mg à noite', lines: [L('clb10', rep(30), 'Clobazam 10 mg, comprimido', 'Tomar 1 comprimido por via oral à noite. Uso contínuo.')] },
+      { id: 'c20', label: '10 mg 12/12h (20 mg/dia)', resumo: 'clobazam 10 mg 12/12h', lines: [L('clb10', rep(60), 'Clobazam 10 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'c30', label: '10 mg manhã + 20 mg noite (30 mg/dia)', resumo: 'clobazam 30 mg/dia', lines: [L('clb10', rep(90), 'Clobazam 10 mg, comprimido', 'Tomar 1 comprimido pela manhã e 2 comprimidos à noite. Uso contínuo.')] },
+      { id: 'c40', label: '20 mg 12/12h (40 mg/dia — máximo)', resumo: 'clobazam 20 mg 12/12h', lines: [L('clb10', rep(120), 'Clobazam 10 mg, comprimido', 'Tomar 2 comprimidos por via oral de 12/12 horas. Uso contínuo.')] },
+    ],
+    etossuximida: [250, 500, 750].map((mg) => ({ id: 'e' + mg, label: `${mg} mg (${mg / 50} mL) 12/12h (${mg * 2} mg/dia)`, resumo: `etossuximida ${mg} mg 12/12h`,
+      lines: [L('eto', rep(Math.ceil((mg / 50) * 2 * 30 / 120)), 'Etossuximida 50 mg/mL, xarope, frasco de 120 mL', `Tomar ${mg / 50} mL (${mg} mg) por via oral de 12/12 horas. Uso contínuo.`)] })),
+    primidona: [
+      { id: 'ptit', label: 'Titulação: 125 mg à noite (½ cp, 1 semana) → 250 mg à noite', resumo: 'primidona 125 mg à noite por 1 semana e depois 250 mg à noite', lines: [L('pri250', [27, 30, 30, 30, 30, 30], 'Primidona 250 mg, comprimido', 'Tomar ½ comprimido à noite na 1ª semana; depois, 1 comprimido à noite. Uso contínuo.')] },
+      { id: 'p125', label: '125 mg à noite (½ cp)', resumo: 'primidona 125 mg à noite', lines: [L('pri250', rep(15), 'Primidona 250 mg, comprimido', 'Tomar ½ comprimido por via oral à noite. Uso contínuo.')] },
+      { id: 'p250', label: '250 mg à noite', resumo: 'primidona 250 mg à noite', lines: [L('pri250', rep(30), 'Primidona 250 mg, comprimido', 'Tomar 1 comprimido por via oral à noite. Uso contínuo.')] },
+      { id: 'p500', label: '250 mg 12/12h (500 mg/dia)', resumo: 'primidona 250 mg 12/12h', lines: [L('pri250', rep(60), 'Primidona 250 mg, comprimido', 'Tomar 1 comprimido por via oral de 12/12 horas. Uso contínuo.')] },
+      { id: 'p750', label: '250 mg 8/8h (750 mg/dia)', resumo: 'primidona 250 mg 8/8h', lines: [L('pri250', rep(90), 'Primidona 250 mg, comprimido', 'Tomar 1 comprimido por via oral de 8/8 horas. Uso contínuo.')] },
+    ],
+  };
+  const EPI_MEDS = [
+    ['lamotrigina', 'Lamotrigina', '25 e 100 mg'], ['levetiracetam', 'Levetiracetam', 'cp ou solução oral'], ['topiramato', 'Topiramato', '25, 50 e 100 mg'],
+    ['gabapentina', 'Gabapentina', '300 e 400 mg'], ['vigabatrina', 'Vigabatrina', '500 mg'], ['clobazam', 'Clobazam', '10 mg — Lista B1'],
+    ['etossuximida', 'Etossuximida', 'xarope — crises de ausência'], ['primidona', 'Primidona', '250 mg'],
+  ];
+  const EPI_CRISES = [['focal', 'focais sem comprometimento da consciência'], ['focalCons', 'focais com comprometimento da consciência'], ['bilat', 'focais evoluindo para tônico-clônicas bilaterais'],
+    ['tcg', 'tônico-clônicas generalizadas'], ['aus', 'de ausência'], ['mio', 'mioclônicas'], ['esp', 'espasmos epilépticos']];
+
+  const EPI = {
+    id: 'epi',
+    nome: 'Epilepsia (G40.0) — lamotrigina, levetiracetam, topiramato, gabapentina, vigabatrina, clobazam, etossuximida, primidona',
+    cids: [{ cid: 'G40.0', diag: 'Epilepsia' }],
+    protocolo: 'PCDT Epilepsia — Portaria Conjunta SAS/SCTIE/MS nº 17, de 21/06/2018',
+    consultadoEm: '2026-11-12',
+    pdfs: { ter: 'TER_EPI' }, fill: { ter: 'fillTerEPI' }, labels: { ter: 'TER' },
+    medsHTML: `
+      <div class="grid">
+        ${EPI_MEDS.map(([k, n, s]) => `
+        <div class="c5"><label class="opts"><input type="checkbox" id="epm_${k}"> <b>${n}</b> <span class="small">— ${s}</span></label></div>
+        <div class="c7 hide" id="epe_${k}Box"><select id="epe_${k}">${esqOptions(ESQ_EPI[k])}</select></div>
+        <div class="c7" id="epe_${k}Fill"></div>`).join('')}
+        <div class="c12"><div class="muted-box" id="epQtd"></div></div>
+        <div class="c12"><div class="small">Lamotrigina 50 mg, clobazam 20 mg e primidona 100 mg não são oferecidos para G40.0 na Regional de Londrina. Carbamazepina, fenitoína, fenobarbital e ácido valproico são do Componente Básico (UBS), fora da LME.</div></div>
+      </div>`,
+    clinicoHTML: `
+      <div class="grid">
+        <div class="c4"><label>Tipo de epilepsia</label><select id="epTipo"><option value="">—</option><option value="focal">Focal</option><option value="generalizada">Generalizada</option><option value="combinada">Focal e generalizada combinadas</option><option value="desconhecida">Tipo desconhecido</option></select></div>
+        <div class="c8"><label>Frequência atual das crises</label><input type="text" id="epFreq" placeholder="ex.: 2 crises/mês"></div>
+      </div>`,
+    clearIds: ['epFreq'],
+    clearSelects: ['epTipo'],
+    
+    read() {
+      const sel = EPI_MEDS.map(([k]) => k).filter((k) => chk('epm_' + k));
+      const esq = {}; sel.forEach((k) => { esq[k] = ESQ_EPI[k].find((e) => e.id === v('epe_' + k)) || ESQ_EPI[k][0]; });
+      return {
+        medsSel: sel, esq, tipoEpi: v('epTipo'), freq: v('epFreq'), frasco: 'lvs150',
+      };
+    },
+    ui(p) {
+      EPI_MEDS.forEach(([k]) => { const on = p.medsSel.includes(k); $('epe_' + k + 'Box').classList.toggle('hide', !on); $('epe_' + k + 'Fill').classList.toggle('hide', on); });
+            const lines = this.meds(p);
+      $('epQtd').innerHTML = lines.length ? '<b>Quantidades na LME (mês 1 → 6):</b><br>' + lines.map((l) => `${l.lmeOption}: ${l.qtd.join(' · ')}`).join('<br>') : 'Marque o(s) medicamento(s).';
+    },
+    meds(p) {
+      const out = [];
+      p.medsSel.forEach((k) => p.esq[k].lines.forEach((l0) => {
+        let l = l0;
+        if (l0.sol) { const f = P.lvs150, vol = 150; l = { lmeOption: f.opt, unid: f.unid, fem: false, qtd: l0.mlMes.map((ml) => Math.ceil(ml / vol)), nome: `${l0.nome}, frasco de ${vol} mL`, pos: l0.pos }; }
+        const ex = out.find((o) => o.lmeOption === l.lmeOption);
+        if (ex) ex.qtd = ex.qtd.map((q, i) => q + l.qtd[i]); else out.push(Object.assign({}, l, { qtd: l.qtd.slice(), med: k }));
+      }));
+      return out;
+    },
+    docs(tipo) {
+      const presc = { id: 'presc', nome: 'Prescrição médica feita por neurologista (controle especial em 2 vias para os itens da Lista C1)', validade: 0, validadeTxt: '30 dias', gerado: 'receita' };
+      const lme = { id: 'lme', nome: 'LME adequadamente preenchida', validade: 3, gerado: 'lme' };
+      const relIni = { id: 'relat', nome: 'Relatório com o quadro clínico, os medicamentos em uso e as doses máximas previamente empregadas (vai na anamnese da LME)', validade: 3, gerado: 'lme' };
+      const relAdq = { id: 'relat', nome: 'Relatório da evolução justificando a alteração de dose/medicamento (vai na anamnese da LME)', validade: 3, gerado: 'lme' };
+      const ter = { id: 'ter', nome: 'Termo de Esclarecimento e Responsabilidade (TER) do PCDT de Epilepsia', validade: 3, gerado: 'ter' };
+      if (tipo === 'inicial') return [presc, lme, relIni, ter];
+      if (tipo === 'adequacao') return [presc, lme, relAdq];
+      return [presc, lme];
+    },
+    outputs(tipo) { return tipo === 'inicial' ? ['lme', 'ter'] : ['lme']; },
+    alerts(d, push) {
+      const p = d.prot, s = p.medsSel, has = (k) => s.includes(k), e = p.esq;
+      if (!s.length) { push('bad', 'Marque o(s) medicamento(s).'); return; }
+      if (!p.tipoEpi) push('warn', 'Informe o tipo de epilepsia (vai na anamnese da LME).');
+      if (!p.freq) push('warn', 'Informe a frequência atual das crises (vai na anamnese da LME).');
+      if (d.tipo === 'inicial' && !d.tratPrevioTexto) push('warn', 'Solicitação inicial: a Farmácia do Paraná pede os medicamentos em uso e as doses máximas já empregadas. Preencha "Tratamentos prévios" (ex.: carbamazepina 1.200 mg/dia por 2 anos — crises persistentes).');
+      if (has('lamotrigina')) {
+        if (e.lamotrigina.titLamo) push('info', 'Lamotrigina + ácido valproico: o valproato dobra o nível da lamotrigina — titular mais devagar (ex.: 25 mg em dias alternados nas 2 primeiras semanas) e alvo menor (100–200 mg/dia).');
+        push('info', 'Lamotrigina: orientar sobre exantema (risco de Stevens-Johnson, maior com titulação rápida ou valproato) — suspender e procurar atendimento se surgir. Se ficar > 5 dias sem tomar, reiniciar a titulação.');
+      }
+      if (has('levetiracetam')) {
+        if (e.levetiracetam.lv500) push('warn', 'Levetiracetam 500 mg às vezes está em falta na Regional de Londrina — prefira "500 mg 12/12h — 2 cp de 250 mg".');
+        push('info', 'Levetiracetam: orientar sobre irritabilidade, alteração de humor e sonolência; ajustar à função renal.');
+      }
+      if (has('topiramato')) push('info', 'Topiramato: parestesias, perda de peso, lentificação cognitiva e nefrolitíase (orientar hidratação).');
+      if (has('vigabatrina')) push('warn', 'Vigabatrina: risco de perda irreversível do campo visual — campimetria basal e periódica (PCDT). Registre na anamnese.');
+      if (has('gabapentina')) push('info', 'Gabapentina: pode agravar crises de ausência e mioclônicas.');
+      if (has('etossuximida')) push('info', 'Etossuximida: indicada para crises de ausência.');
+      if (has('clobazam')) push('warn', 'Clobazam é Lista B1: exige Notificação de Receita B (azul) à parte, validade 30 dias, até 60 dias de tratamento. Ele não sai na receita gerada aqui.');
+      if (has('primidona')) push('info', 'Primidona: sedação e tontura no início; não suspender abruptamente.');
+      if (s.some((k) => k !== 'clobazam')) push('info', 'Itens da Lista C1: receita de controle especial em 2 vias, validade de 30 dias — a 1ª retirada precisa ocorrer nesse prazo. A LME justifica a quantidade para 6 meses (Nota Técnica SESA-PR nº 01/2026).');
+      if (d.tipo === 'inicial') push('info', 'TER: sai no pacote com os medicamentos marcados; o paciente marca Sim/Não na autorização de uso dos dados e assina.');
+    },
+    anamnese(d) {
+      const p = d.prot; const s = [];
+      const tipo = { focal: 'focal', generalizada: 'generalizada', combinada: 'focal e generalizada combinada', desconhecida: 'de tipo desconhecido' }[p.tipoEpi];
+      s.push(`Epilepsia${tipo ? ' ' + tipo : ''}, CID G40.0.`);
+      if (p.freq) s.push(`Frequência atual das crises: ${p.freq}.`);
+      if (d.tratPrevioTexto) s.push(`Tratamentos prévios (doses máximas): ${d.tratPrevioTexto}.`);
+      const r = p.medsSel.map((k) => p.esq[k].resumo).join(' + ');
+      if (r) s.push(`Solicito ${r}, conforme PCDT Epilepsia (Portaria Conjunta nº 17/2018).`);
+      return s.join(' ');
+    },
+    receita(d) {
+      const p = d.prot; const all = this.meds(p);
+      if (!all.length) return 'Marque o(s) medicamento(s) no passo 3.';
+      const lines = all.filter((l) => l.med !== 'clobazam'), clb = all.some((l) => l.med === 'clobazam');
+      if (!lines.length) return 'Clobazam é Lista B1: prescrever em Notificação de Receita B (azul), que não é gerada aqui.';
+      const extra = ['Tratamento para 6 (seis) meses, uso contínuo, conforme LME (Nota Técnica SESA-PR nº 01/2026).'];
+      if (clb) extra.push('Clobazam: prescrever em Notificação de Receita B (azul) separada.');
+      return receitaBase(d, lines, 'RECEITUÁRIO DE CONTROLE ESPECIAL — 1ª via: farmácia · 2ª via: paciente\nUSO ORAL', extra);
+    },
+    infos: [
+      'Exigências da Farmácia do Paraná para G40.0 (consulta de 12/11/2026) — iguais para todos os 16 itens: solicitação inicial = LME + prescrição por neurologista + relatório com quadro clínico, medicamentos em uso e doses máximas já empregadas (pode ir na anamnese da LME) + TER do PCDT de Epilepsia. Adequação = LME + prescrição + relatório da evolução. Renovação = LME + prescrição. EEG e neuroimagem não são exigidos.',
+      'Padrão do serviço: epilepsia sempre com CID G40.0.',
+      'Lamotrigina (só 25 e 100 mg na Regional): titulação lenta, +25 mg a cada 2 semanas até 200 mg/dia (alvo na 15ª semana); acima disso, +50 mg por semana.',
+      'Levetiracetam 500 mg falta às vezes na Regional — o esquema com 2 cp de 250 mg evita devolução da LME.',
+      'Doses usuais em adultos: levetiracetam até 3.000 mg/dia; topiramato até 400 mg/dia; gabapentina até 3.600 mg/dia; vigabatrina até 3 g/dia; clobazam até 40 mg/dia; etossuximida até 1.500 mg/dia.',
+      'Clobazam é Lista B1 (Notificação B azul); os demais são Lista C1 (receita de controle especial em 2 vias).',
+      'Carbamazepina, fenitoína, fenobarbital e ácido valproico: Componente Básico (UBS), fora da LME.',
+    ],
+  };
+
+  window.LME_CONFIG = {
+    servico: { cnes: '2781859', estabelecimento: 'Hospital Universitário de Londrina', local: 'Londrina - PR' },
+    // Preceptores (nome, CRM, CNS) — aparecem na lista de seleção do passo 6
+    medicos: [
+      { nome: 'Victor Hugo Tolotto de Carvalho', crm: '37197', cns: '700606402556466', uf: 'PR' },
+      { nome: 'Luis Sidônio Teixeira da Silva', crm: '11363', cns: '701208075753217', uf: 'PR' },
+      { nome: 'Juliana Passos de Almeida', crm: '40227', cns: '702106707375598', uf: 'PR' },
+      { nome: 'Milena Gerke Sampaio', crm: '35342', cns: '704306575285591', uf: 'PR' },
+    ],
+  };
+  window.LME_PROTOCOLS = { [EM.id]: EM, [DA.id]: DA, [DP.id]: DP, [EPI.id]: EPI };
+})();
+</script>
+
+<script>(function(){
+const $=id=>document.getElementById(id);
+const CFG=window.LME_CONFIG, PROTS=window.LME_PROTOCOLS;
+const val=id=>(($(id)||{}).value||'').trim();
+const radio=n=>{const r=document.querySelector(`input[name="${n}"]:checked`);return r?r.value:''};
+const fmt=iso=>{if(!iso)return'';const[y,m,d]=iso.split('-');return`${d}/${m}/${y}`};
+const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const extenso=iso=>{if(!iso)return'';const[y,m,d]=iso.split('-');return`${+d} de ${MESES[+m-1]} de ${y}`};
+const todayISO=()=>{const t=new Date();t.setMinutes(t.getMinutes()-t.getTimezoneOffset());return t.toISOString().slice(0,10)};
+function addMonths(iso,n){const[y,m,d]=iso.split('-').map(Number);return new Date(Date.UTC(y,m-1+n,d)).toISOString().slice(0,10)}
+function addDays(iso,n){return new Date(Date.parse(iso)+n*864e5).toISOString().slice(0,10)}
+function daysBetween(a,b){return Math.round((Date.parse(b)-Date.parse(a))/864e5)}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
+function safeLS(fn){try{return fn()}catch(e){return null}}
+const num=id=>parseFloat(String(val(id)).replace(',','.'));
+const LABELS={lme:'Só a LME (editável no Acrobat)',rel:'Só o Relatório Específico',ter:'Só o TER',meem:'Só o MEEM',cdr:'Só o CDR'};
+
+Object.values(PROTS).forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=p.nome;$('prot').appendChild(o)});
+$('dataSol').value=todayISO();
+const docState={};
+const prot=()=>PROTS[$('prot').value];
+
+function loadProtocol(){
+  const p=prot();
+  $('cid').innerHTML=p.cids.map(c=>`<option value="${c.cid}">${c.cid} — ${c.diag}</option>`).join('');
+  if(p.cidPadrao)$('cid').value=p.cidPadrao;
+  $('protMeds').innerHTML=p.medsHTML; $('protClin').innerHTML=p.clinicoHTML;
+  if(p.init)p.init();
+  $('singleBtns').innerHTML='';
+  renderDocs(); update();
+}
+
+function renderMedicos(){
+  const list=[...CFG.medicos];
+  const saved=safeLS(()=>JSON.parse(localStorage.getItem('lmeMedicos')||'[]'))||[];
+  saved.forEach(s=>{if(!list.some(m=>m.crm===s.crm))list.push(s)});
+  const sel=$('medSel');sel.innerHTML='<option value="">— escolher o nome (ou digitar abaixo) —</option>';
+  list.slice().sort((a,b)=>a.nome.localeCompare(b.nome,'pt')).forEach(m=>{const o=document.createElement('option');o.value=list.indexOf(m);o.textContent=m.nome;sel.appendChild(o)});
+  sel._list=list; $('medSelBox').classList.toggle('hide',!list.length);
+}
+$('medSel').addEventListener('change',e=>{const m=e.target._list[e.target.value];if(!m){$('mNome').value='';$('mCrm').value='';$('mCns').value='';update();return}$('mNome').value=m.nome;$('mCrm').value=m.crm;$('mCns').value=m.cns||'';$('mUf').value=m.uf||'PR';update()});
+
+function currentItems(){const p=prot();return p.docs($('tipo').value,p.read())}
+function renderDocs(){
+  const items=currentItems(); const tb=$('docsBody'); tb.innerHTML='';
+  items.forEach(it=>{
+    const st=docState[it.id]||(docState[it.id]={date:''});
+    const tr=document.createElement('tr');tr.dataset.id=it.id;
+    let input='';
+    if(it.gerado) input='<span class="pill gen">gerado aqui</span>';
+    else if(it.link) input=`<a href="${it.link}" target="_blank" rel="noopener">baixar modelo oficial (SESA-PR)</a>`;
+    else if(it.dateField) input=`<span class="small">usa a ${it.fieldLabel}</span>`;
+    else input=`<input type="date" value="${st.date}">`;
+    const vt=it.validadeTxt||(it.validade?it.validade+' meses':'—');
+    tr.innerHTML=`<td>${it.nome}</td><td>${vt}</td><td>${input}</td><td class="st"></td>`;
+    const inp=tr.querySelector('input'); if(inp) inp.addEventListener('input',()=>{st.date=inp.value;update()});
+    tb.appendChild(tr);
+  });
+  tb._items=items; tb._key=items.map(i=>i.id).join();
+  $('sameDateBox').classList.toggle('hide',!items.some(i=>i.exame&&!i.dateField));
+}
+$('sameDateBtn').addEventListener('click',()=>{const d=val('sameDate');if(!d){toast('Escolha a data primeiro');return}
+  $('docsBody')._items.filter(i=>i.exame&&!i.dateField).forEach(i=>{(docState[i.id]||(docState[i.id]={})).date=d});
+  renderDocs();update();toast('Data aplicada aos exames')});
+
+function collect(){
+  const p=prot(); const cid=val('cid'); const cidObj=p.cids.find(c=>c.cid===cid)||p.cids[0];
+  const pr=p.read();
+  const data={
+    tipo:$('tipo').value, cnes:CFG.servico.cnes, estabelecimento:CFG.servico.estabelecimento, local:CFG.servico.local,
+    dataSolicitacao:val('dataSol'), dataExtenso:extenso(val('dataSol')), cid:cidObj.cid, diagnostico:cidObj.diag,
+    paciente:{nome:val('pNome').toUpperCase(),mae:val('pMae').toUpperCase(),peso:val('pPeso'),altura:val('pAlt'),nasc:val('pNasc'),sexo:val('pSexo'),
+      cns:val('pCns'),cpf:val('pCpf'),tel1:val('pTel1'),tel2:val('pTel2'),email:val('pEmail'),raca:radio('raca'),etnia:val('pEtnia')},
+    incapaz:radio('incapaz')==='sim', responsavel:val('pResp').toUpperCase(), responsavelDoc:val('pRespDoc'),
+    medico:{nome:val('mNome').toUpperCase(),crm:val('mCrm'),uf:(val('mUf')||'PR').toUpperCase(),cns:val('mCns')},
+    preenchidoPor:+$('preenchido').value, outroNome:val('oNome'), outroCpf:val('oCpf'),
+    prot:pr, fmt,
+  };
+  if(data.paciente.nasc&&data.dataSolicitacao){const a=new Date(data.paciente.nasc),b=new Date(data.dataSolicitacao);let age=b.getFullYear()-a.getFullYear();if(b.getMonth()<a.getMonth()||(b.getMonth()===a.getMonth()&&b.getDate()<a.getDate()))age--;data.paciente.idade=age}
+  data.tratPrevioTexto=val('tratPrev'); data.tratPrevio=!!data.tratPrevioTexto;
+  pr.medicamentosPrevios=data.tratPrevioTexto; data.rel=pr;
+  data.medicamentos=p.meds(pr).map(l=>({lmeOption:l.lmeOption,qtd:l.qtd}));
+  data.anamnese=val('anamnese');
+  return data;
+}
+
+function update(){
+  const p=prot(), tipo=$('tipo').value;
+  // a lista de documentos pode mudar com a escolha de medicamentos (ex.: memantina)
+  const key=currentItems().map(i=>i.id).join(); if(key!==$('docsBody')._key) renderDocs();
+  const data=collect(), A=[]; const push=(l,t)=>A.push([l,t]);
+  $('protoInfo').textContent=`${p.protocolo} · Exigências consultadas na Farmácia do Paraná em ${fmt(p.consultadoEm)}.`;
+  $('consultado').textContent=fmt(p.consultadoEm); $('protRef').textContent=p.protocolo;
+  if(p.ui)p.ui(data.prot);
+  $('pEtnia').classList.toggle('hide',data.paciente.raca!=='indigena');
+  ['respBox1','respBox2'].forEach(id=>$(id).classList.toggle('hide',!data.incapaz));
+  ['outroBox1','outroBox2'].forEach(id=>$(id).classList.toggle('hide',data.preenchidoPor!==4));
+
+  if($('anamAuto').checked){$('anamnese').value=p.anamnese(data);data.anamnese=$('anamnese').value}
+  const al=data.anamnese.length;$('anamCount').textContent=`${al} caracteres${al>650?' — longa: a fonte na LME ficará pequena; considere resumir':''}`;
+  if(al>800) push('warn','Anamnese muito longa para o campo 11 da LME (> 800 caracteres). Resuma.');
+  if(data.medicamentos.length>6) push('bad','A LME comporta no máximo 6 linhas de medicamento.');
+
+  let ok=0;
+  [...$('docsBody').querySelectorAll('tr')].forEach(tr=>{
+    const it=$('docsBody')._items.find(x=>x.id===tr.dataset.id); const cell=tr.querySelector('.st'); let html='';
+    if(it.gerado){html='<span class="pill ok">pronto</span>';ok++}
+    else if(it.link){html='<span class="pill warn">imprimir e preencher</span>';ok++}
+    else{
+      const dt=it.dateField?val(it.dateField):(docState[it.id]||{}).date;
+      if(!dt){html='<span class="pill bad">sem data</span>';push('bad',`Falta: ${it.nome}.`)}
+      else{
+        const exp=addMonths(dt,it.validade), left=daysBetween(data.dataSolicitacao,exp);
+        if(dt>data.dataSolicitacao){html='<span class="pill warn">data futura</span>';push('warn',`${it.nome}: data posterior à solicitação.`)}
+        else if(left<0){html='<span class="pill bad">vencido</span>';push('bad',`${it.nome} vencido em ${fmt(exp)} (validade ${it.validade} meses). Repetir.`)}
+        else if(left<=30){html=`<span class="pill warn">vence ${fmt(exp)}</span>`;push('warn',`${it.nome} vence em ${left} dia(s) (${fmt(exp)}): entregar logo.`);ok++}
+        else{html=`<span class="pill ok">válido até ${fmt(exp)}</span>`;ok++}
+      }
+    }
+    cell.innerHTML=html;
+  });
+
+  p.alerts(data,push,num);
+
+  const P=data.paciente;
+  const reqs=[[P.nome,'nome do paciente'],[P.mae,'nome da mãe'],[P.peso,'peso'],[P.altura,'altura'],[P.raca,'raça/cor'],[data.medico.nome,'nome do médico'],[data.medico.cns,'CNS do médico'],[data.medico.crm,'CRM do médico'],[data.dataSolicitacao,'data da solicitação']];
+  const miss=reqs.filter(x=>!x[0]).map(x=>x[1]); if(miss.length) push('bad',`LME incompleta: ${miss.join(', ')}.`);
+  if(P.raca==='indigena'&&!P.etnia) push('warn','Raça/cor indígena: informar a etnia.');
+  if(data.incapaz&&!data.responsavel) push('bad','Paciente incapaz: informe o nome do responsável.');
+  if(!P.cpf&&!P.cns) push('warn','Informe CPF ou CNS do paciente (campo 21 da LME).');
+  if(!P.cns) push('warn','CNS do paciente vai no Relatório e no TER — em branco, terá de ser preenchido à mão.');
+  if(P.peso&&(+P.peso<20||+P.peso>250)) push('warn','Peso fora do esperado — confira.');
+  if(P.altura&&(+P.altura<100||+P.altura>230)) push('warn','Altura deve ser em centímetros (ex.: 165).');
+  if(data.medico.cns&&data.medico.cns.replace(/\D/g,'').length!==15) push('warn','CNS do médico deve ter 15 dígitos.');
+  if(P.cns&&P.cns.replace(/\D/g,'').length!==15) push('warn','CNS do paciente deve ter 15 dígitos.');
+
+  $('rx').textContent=p.receita(docData(data));
+
+  const order={bad:0,warn:1,ok:2,info:3};A.sort((a,b)=>order[a[0]]-order[b[0]]);
+  const bad=A.filter(a=>a[0]==='bad').length, warn=A.filter(a=>a[0]==='warn').length;
+  $('sOk').textContent=ok;$('sWarn').textContent=warn;$('sBad').textContent=bad;
+  $('alerts').innerHTML=(A.length?A:[['ok','Tudo certo para gerar os documentos.']]).map(([l,t])=>`<li class="${l}">${t}</li>`).join('');
+  if(!bad) $('alerts').insertAdjacentHTML('afterbegin','<li class="ok">Sem pendências bloqueantes.</li>');
+  $('infos').innerHTML=p.infos.map(t=>`<li>${t}</li>`).join('');
+  // botões individuais conforme o tipo
+  const outs=p.outputs(tipo,data.prot); const bk=outs.join();
+  if($('singleBtns')._k!==bk){$('singleBtns')._k=bk;$('singleBtns').innerHTML=outs.map(k=>`<button class="btn sec" data-k="${k}">${k==='lme'?LABELS.lme:'Só: '+((p.labels&&p.labels[k])||LABELS[k].replace('Só o ','').replace('Só a ',''))}</button>`).join('');
+    $('singleBtns').querySelectorAll('button').forEach(b=>b.onclick=()=>gen(b.dataset.k));}
+  $('bPack').textContent=`Baixar pacote (${outs.map(k=>({lme:'LME',rel:'Relatório',ter:'TER',meem:'MEEM',cdr:'CDR'})[k]).join(' + ')})`;
+  window._last={data,A};
+}
+
+// ---- PDFs ----
+const cache={};
+async function getPdf(name){
+  if(cache[name])return cache[name];
+  if(window.PDF_DATA&&window.PDF_DATA[name]){const b=atob(window.PDF_DATA[name]);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return cache[name]=u}
+  let r=await fetch(`pdf/${name}.pdf`).catch(()=>null);if(!r||!r.ok)r=await fetch(`${name}.pdf`).catch(()=>null);if(!r||!r.ok)throw new Error('não foi possível carregar o modelo '+name);return cache[name]=new Uint8Array(await r.arrayBuffer());
+}
+let dl=null,dlTried=null;
+function dlReady(){if(!dlTried)dlTried=(window.claude&&window.claude.use)?window.claude.use('downloads').then(x=>dl=x).catch(()=>null):Promise.resolve(null);return dlTried}
+setTimeout(dlReady,0);
+async function saveFile(name,bytes){
+  const blob=new Blob([bytes],{type:'application/pdf'});
+  await dlReady();
+  if(dl){try{await dl.save({filename:name,data:blob});toast('Arquivo salvo');return}catch(e){if(e&&e.code==='declined'){toast('Download cancelado');return}}}
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Arquivo gerado');
+}
+function baseName(){const n=(val('pNome')||'paciente').split(/\s+/).slice(0,2).join('_').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\w]/g,'');return `${n}_${$('prot').value}_${val('dataSol')}`}
+async function build(k,data){
+  const L=window.PDFLib,F=window.LMEFill,p=prot();
+  if(k==='lme') return F.fillLME(L,await getPdf('LME'),data);
+  return F[p.fill[k]](L,await getPdf(p.pdfs[k]),data);
+}
+function docData(d){if(!$('semData').checked)return d;return Object.assign({},d,{dataSolicitacao:'',dataExtenso:'____ de ______________ de ______'})}
+async function gen(which){
+  update(); const {A}=window._last; const data=docData(window._last.data); const bad=A.filter(a=>a[0]==='bad');
+  $('genMsg').textContent=bad.length?`Atenção: gerado com ${bad.length} pendência(s) — veja a conferência.`:'';
+  const btns=[...document.querySelectorAll('.side .btn')];btns.forEach(b=>b.disabled=true);
+  try{
+    if(which==='pack'){const parts=[];for(const k of prot().outputs($('tipo').value,prot().read()))parts.push(await build(k,data));await saveFile(`${baseName()}_pacote.pdf`,await window.LMEFill.mergePdfs(window.PDFLib,parts))}
+    else await saveFile(`${baseName()}_${which.toUpperCase()}.pdf`,await build(which,data));
+  }catch(e){console.error(e);$('genMsg').textContent='Erro ao gerar: '+e.message}
+  finally{btns.forEach(b=>b.disabled=false)}
+}
+$('bPack').onclick=()=>gen('pack');
+
+async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy');toast(msg)}catch(_){toast('Não foi possível copiar')}t.remove()}}
+$('copyRx').onclick=()=>copy($('rx').textContent,'Receita copiada');
+$('bCheck').onclick=()=>{update();const p=prot();const items=$('docsBody')._items;const lines=[`CHECKLIST — ${p.nome} (CID ${val('cid')}) — ${$('tipo').selectedOptions[0].text}`,`Paciente: ${val('pNome')||'—'} · Data: ${fmt(val('dataSol'))}`,''];
+  [...$('docsBody').querySelectorAll('tr')].forEach(tr=>{const it=items.find(x=>x.id===tr.dataset.id);const st=tr.querySelector('.st').textContent;lines.push(`[${/pronto|válido|vence/.test(st)?'x':' '}] ${it.nome} — ${st}`)});
+  lines.push('[ ] Documentos pessoais: RG/certidão, CPF, CNS e comprovante de residência (conferir no pós-consulta)');
+  const pend=window._last.A.filter(a=>a[0]==='bad'||a[0]==='warn');if(pend.length){lines.push('','Pendências/atenção:');pend.forEach(a=>lines.push('- '+a[1]))}
+  copy(lines.join('\n'),'Checklist copiado')};
+$('bClear').onclick=()=>{const p=prot();
+  ['pNome','pPeso','pAlt','pMae','pNasc','pCns','pCpf','pTel1','pTel2','pEmail','pEtnia','pResp','pRespDoc','tratPrev','oNome','oCpf','sameDate',...(p.clearIds||[])].forEach(id=>{if($(id))$(id).value=''});
+  (p.clearSelects||[]).forEach(id=>{if($(id))$(id).selectedIndex=0});
+  $('pSexo').value='';document.querySelectorAll('input[name=raca]').forEach(r=>r.checked=false);
+  (p.clearRadios||[]).forEach(n=>document.querySelectorAll(`input[name=${n}]`).forEach(r=>r.checked=false));
+  document.querySelector('input[name=incapaz][value=nao]').checked=true;Object.keys(docState).forEach(k=>delete docState[k]);$('anamAuto').checked=true;renderDocs();update();toast('Dados do paciente apagados')};
+
+$('lembrarMed').addEventListener('change',e=>{if(!e.target.checked)return;const m={nome:val('mNome'),crm:val('mCrm'),cns:val('mCns'),uf:val('mUf')||'PR'};if(!m.nome||!m.crm){toast('Preencha nome e CRM');e.target.checked=false;return}
+  safeLS(()=>{const s=JSON.parse(localStorage.getItem('lmeMedicos')||'[]').filter(x=>x.crm!==m.crm);s.push(m);localStorage.setItem('lmeMedicos',JSON.stringify(s))});renderMedicos();toast('Médico lembrado neste computador')});
+
+$('anamnese').addEventListener('input',()=>{$('anamAuto').checked=false;update()});
+$('prot').addEventListener('change',()=>{Object.keys(docState).forEach(k=>delete docState[k]);$('anamAuto').checked=true;loadProtocol()});
+$('tipo').addEventListener('change',()=>{renderDocs();update()});
+const main=document.querySelector('main');
+main.addEventListener('input',e=>{if(e.target.id!=='anamnese'&&!e.target.closest('#docsBody')&&e.target.id!=='sameDate')update()});
+main.addEventListener('change',e=>{if(!e.target.closest('#docsBody')&&e.target.id!=='sameDate'&&e.target.id!=='prot')update()});
+// protocolo inicial pelo hash (#da ou #em) — útil para links diretos
+const h=location.hash.replace('#',''); if(h){const m=Object.keys(PROTS).find(k=>k.startsWith(h));if(m)$('prot').value=m}
+window.addEventListener('hashchange',()=>{const h=location.hash.replace('#','');const m=Object.keys(PROTS).find(k=>k.startsWith(h));if(m&&m!==$('prot').value){$('prot').value=m;Object.keys(docState).forEach(k=>delete docState[k]);loadProtocol()}});
+renderMedicos();loadProtocol();
+})();
+</script>
+</body>
+</html>
+
